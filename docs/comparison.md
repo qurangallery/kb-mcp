@@ -71,7 +71,7 @@ These do not cover the Shamela library.
 
 ## Related
 
-- [Library coverage](./library-coverage.md)
+- [Library coverage](../references/library-coverage.md)
 - [Search and citations](./search-and-citations.md)
 - [FAQ](./faq.md)
 

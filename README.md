@@ -57,9 +57,12 @@ Then ask your assistant something the library can answer. Queries to the library
 - [Verify a quotation: edition, printed page, layer, citation](./docs/verify-a-quotation.md)
 - [Hadith takhrij: collections, pages and chains for one hadith](./docs/hadith-takhrij.md)
 - [Rate limits and errors: keyless and keyed tiers, free keys, error codes](./docs/rate-limits.md)
-- [Library coverage: categories, scopes, editions and page numbering](./docs/library-coverage.md)
 - [Islamic MCP servers compared: Shamela, turath.io, hadith and Quran](./docs/comparison.md)
 - [FAQ](./docs/faq.md)
+
+### References
+
+- [Library coverage: categories, scopes, editions and page numbering](./references/library-coverage.md)
 
 The full documentation is also published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
 

@@ -40,7 +40,7 @@ The twelve scopes:
 | `seerah` | 972 |
 | `lugha` | 1,052 |
 
-`hadith-primary` (the eight primary collections, each pinned to one printing) and `tafsir-canonical` (Ibn Kathir, al-Tabari, Ibn al-Jawzi and three more, read in that order) are curated lists; the other ten are broad shelves. Coverage outside the scopes is in [Library coverage](./library-coverage.md).
+`hadith-primary` (the eight primary collections, each pinned to one printing) and `tafsir-canonical` (Ibn Kathir, al-Tabari, Ibn al-Jawzi and three more, read in that order) are curated lists; the other ten are broad shelves. Coverage outside the scopes is in [Library coverage](../references/library-coverage.md).
 
 ## Two passes
 

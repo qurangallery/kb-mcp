@@ -33,7 +33,7 @@ Yes.
 
 ## What is in the library?
 
-8,594 works by 3,188 authors in 41 categories: Quran sciences, tafsir, hadith and its sciences, fiqh of the four schools and comparative fiqh, creed, Arabic language, history, biography and more. Twelve scopes cover 7,084 works; the raw tools reach all of them. See [Library coverage](./library-coverage.md).
+8,594 works by 3,188 authors in 41 categories: Quran sciences, tafsir, hadith and its sciences, fiqh of the four schools and comparative fiqh, creed, Arabic language, history, biography and more. Twelve scopes cover 7,084 works; the raw tools reach all of them. See [Library coverage](../references/library-coverage.md).
 
 ## What does a result contain?
 

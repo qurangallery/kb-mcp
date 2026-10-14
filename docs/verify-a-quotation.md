@@ -134,7 +134,7 @@ The response includes `components` with `auto_numbered: false`. For a book on Sh
 
 - [Search and citations](./search-and-citations.md)
 - [Hadith takhrij](./hadith-takhrij.md)
-- [Library coverage and edition metadata](./library-coverage.md)
+- [Library coverage and edition metadata](../references/library-coverage.md)
 
 Canonical guide: [Grounding rules for answers built on the library](https://qurangallery.com/docs/mcp/grounding-rules)
 

@@ -15,7 +15,7 @@ Required parameters are in **bold**. `response_format` is accepted by most `sham
 | `search`         | Whole-library search for ChatGPT deep research. Up to 10 `{id, title, url}`; `id` is `bookId:pageId`. Unscoped.                                                                                       | **`query`**                                                     |
 | `fetch`          | Read one page by a `search` id. Main text and footnotes kept apart, with `metadata`.                                                                                                                  | **`id`**                                                        |
 
-`search_library` scopes: `hadith-primary`, `tafsir-canonical`, `fiqh-hanafi`, `fiqh-maliki`, `fiqh-shafii`, `fiqh-hanbali`, `fiqh-comparative`, `aqeedah`, `hadith-sciences`, `tafsir`, `seerah`, `lugha`. Book counts per scope are in [Library coverage](./library-coverage.md).
+`search_library` scopes: `hadith-primary`, `tafsir-canonical`, `fiqh-hanafi`, `fiqh-maliki`, `fiqh-shafii`, `fiqh-hanbali`, `fiqh-comparative`, `aqeedah`, `hadith-sciences`, `tafsir`, `seerah`, `lugha`. Book counts per scope are in [Library coverage](../references/library-coverage.md).
 
 ## Searching
 

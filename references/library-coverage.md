@@ -114,14 +114,14 @@ Each printing of a work is its own entry with its own `book_id`; the edition is 
 
 - The library is the Shamela catalogue; works outside it are not included.
 - Page numbers of the 1,417 auto-numbered works are not a printing's and must not be cited as one.
-- The hadith-key and isnad indexes cover ten books each; other works are searchable by wording only. See [Hadith takhrij](./hadith-takhrij.md).
+- The hadith-key and isnad indexes cover ten books each; other works are searchable by wording only. See [Hadith takhrij](../docs/hadith-takhrij.md).
 - Category labels are Shamela's; the English glosses above are descriptive.
 
 ## Related
 
-- [Search and citations](./search-and-citations.md)
-- [Verify a quotation](./verify-a-quotation.md)
-- [Available tools](./available-tools.md)
+- [Search and citations](../docs/search-and-citations.md)
+- [Verify a quotation](../docs/verify-a-quotation.md)
+- [Available tools](../docs/available-tools.md)
 
 Canonical guide: [Choosing a scope](https://qurangallery.com/docs/mcp/scopes)
 
