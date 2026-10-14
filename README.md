@@ -45,6 +45,8 @@ Then ask your assistant something the library can answer. Queries to the library
 
 ## Documentation
 
+- [Connect Claude, Claude Desktop and Claude Code](./docs/connect-claude.md)
+
 The full documentation is also published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
 
 ## License
