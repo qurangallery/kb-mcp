@@ -21,7 +21,7 @@ This repository is the documentation. Hosted service, source not published; docs
 
 ## At a glance
 
-| | |
+| Topic | Detail |
 | --- | --- |
 | 1. Endpoint | `https://qurangallery.com/mcp/shamela`: Streamable HTTP (POST), stateless, hosted; nothing to install |
 | 2. Access | No account and no key. An optional free key only raises limits: keyless 10 tool calls a minute and 200 a day per IP, with a key 60 a minute; page range 5 vs 20 pages, chapter read 10 vs 100 pages |
