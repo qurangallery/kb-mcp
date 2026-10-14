@@ -53,6 +53,7 @@ Then ask your assistant something the library can answer. Queries to the library
 - [Connect GitHub Copilot](./docs/connect-copilot.md)
 - [Connect any MCP client (SDK, mcp-remote, Inspector, curl, Python)](./docs/connect-any-client.md)
 - [Tools reference: all 39 tools, 3 prompts and 1 resource](./docs/tools.md)
+- [Search and citations: scopes, Arabic search, main text vs footnotes, grounding rules](./docs/search-and-citations.md)
 
 The full documentation is also published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
 
