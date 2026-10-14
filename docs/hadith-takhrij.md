@@ -119,7 +119,7 @@ It contains no verdict on authenticity. For that, consult a qualified scholar an
 
 - [Search and citations](./search-and-citations.md)
 - [Verify a quotation](./verify-a-quotation.md)
-- [Tools reference](./tools.md)
+- [Available tools](./available-tools.md)
 
 Canonical guide: [Hadith takhrij with MCP](https://qurangallery.com/docs/mcp/hadith-takhrij)
 

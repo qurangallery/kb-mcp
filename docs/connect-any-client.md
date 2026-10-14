@@ -140,7 +140,7 @@ print(len(tools), hit['book'], hit['printedPage'], hit['matchedIn'])
 
 ## Related
 
-- [Tools reference](./tools.md)
+- [Available tools](./available-tools.md)
 - [Search and citations](./search-and-citations.md)
 - [Limits and errors](./limits-and-errors.md)
 

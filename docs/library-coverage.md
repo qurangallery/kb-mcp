@@ -121,7 +121,7 @@ Each printing of a work is its own entry with its own `book_id`; the edition is 
 
 - [Search and citations](./search-and-citations.md)
 - [Verify a quotation](./verify-a-quotation.md)
-- [Tools reference](./tools.md)
+- [Available tools](./available-tools.md)
 
 Canonical guide: [Choosing a scope](https://qurangallery.com/docs/mcp/scopes)
 

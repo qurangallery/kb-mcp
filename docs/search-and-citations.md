@@ -216,7 +216,7 @@ A good citation: al-Bukhārī, Ṣaḥīḥ al-Bukhārī, ṭ. al-Sulṭāniyya,
 
 - [Verify a quotation](./verify-a-quotation.md)
 - [Hadith takhrij](./hadith-takhrij.md)
-- [Tools reference](./tools.md)
+- [Available tools](./available-tools.md)
 
 Canonical guides: [search_library reference](https://qurangallery.com/docs/mcp/search-library) · [Choosing a scope](https://qurangallery.com/docs/mcp/scopes) · [Reading a result](https://qurangallery.com/docs/mcp/reading-results) · [Grounding rules](https://qurangallery.com/docs/mcp/grounding-rules)
 

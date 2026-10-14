@@ -62,7 +62,7 @@ Keep any file that holds a key out of git.
 ## Limitations
 
 - Library queries must contain Arabic words; the agent translates English terms first. See [Search and citations](./search-and-citations.md).
-- Some clients cap the number of tools they load across all servers. This server has 39 ([Tools reference](./tools.md)); turn off servers you do not need.
+- Some clients cap the number of tools they load across all servers. This server has 39 ([Available tools](./available-tools.md)); turn off servers you do not need.
 
 ## Related
 

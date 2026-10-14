@@ -72,7 +72,7 @@ Do not commit a workspace file that contains a key.
 
 - [Connect GitHub Copilot](./connect-copilot.md)
 - [Connect Cursor](./connect-cursor.md)
-- [Tools reference](./tools.md)
+- [Available tools](./available-tools.md)
 
 Canonical guide: [Connect VS Code to the Islamic library](https://qurangallery.com/docs/mcp/vscode)
 

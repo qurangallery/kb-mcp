@@ -53,7 +53,7 @@ A key is never required. A free key raises the limit from 10 to 60 tool calls a 
 ## Related
 
 - [Connect VS Code](./connect-vscode.md)
-- [Tools reference](./tools.md)
+- [Available tools](./available-tools.md)
 - [Limits and errors](./limits-and-errors.md)
 
 Canonical guide: [GitHub Copilot in VS Code](https://qurangallery.com/docs/mcp/copilot)

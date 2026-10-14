@@ -79,7 +79,7 @@ Expected: a hit in صحيح البخاري, ط السلطانية (Sahih al-Bukh
 
 ## Related
 
-- [Tools reference](./tools.md)
+- [Available tools](./available-tools.md)
 - [Search and citations](./search-and-citations.md)
 - [Connect Claude, Claude Desktop and Claude Code](./connect-claude.md)
 

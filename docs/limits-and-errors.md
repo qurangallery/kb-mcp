@@ -103,7 +103,7 @@ If the library service behind the server is unreachable, `tools/list` returns no
 ## Related
 
 - [Connect any MCP client](./connect-any-client.md)
-- [Tools reference](./tools.md)
+- [Available tools](./available-tools.md)
 - [FAQ](./faq.md)
 
 Canonical guide: [Limits and errors](https://qurangallery.com/docs/mcp/limits-and-errors)

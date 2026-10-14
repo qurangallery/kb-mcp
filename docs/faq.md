@@ -29,7 +29,7 @@ Yes.
 
 ## How many tools does it have?
 
-39, all read-only: `search_library`, `search` and `fetch`, plus 36 `shamela_*` library tools. Also 3 prompts (`takhrij_hadith`, `cite_passage`, `compare_tafsir`) and 1 resource (`qurangallery://grounding-rules`). See [Tools reference](./tools.md).
+39, all read-only: `search_library`, `search` and `fetch`, plus 36 `shamela_*` library tools. Also 3 prompts (`takhrij_hadith`, `cite_passage`, `compare_tafsir`) and 1 resource (`qurangallery://grounding-rules`). See [Available tools](./available-tools.md).
 
 ## What is in the library?
 

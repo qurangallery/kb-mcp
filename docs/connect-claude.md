@@ -91,7 +91,7 @@ Treat the key like a password and keep it out of git.
 
 ## Related
 
-- [Tools reference](./tools.md)
+- [Available tools](./available-tools.md)
 - [Limits and errors](./limits-and-errors.md)
 - [Connect any MCP client](./connect-any-client.md)
 
