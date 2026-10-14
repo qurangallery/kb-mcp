@@ -188,7 +188,7 @@ It gathers candidates with a normalised search, then checks each page's raw text
 | Root expansion | `shamela_search_pages`, `options.morphology: true` | Every root reading is searched. «كتب» expands to `كتب, تبب, توب, وتب`; in Sahih al-Bukhari it matches 110 pages plain and 714 expanded. Read `morphology_expanded_to`. |
 | Wildcards | `options.wildcards: true`; `*` any run of letters, `?` one letter | `صيا*` matches 52 pages in Sahih al-Bukhari. Cannot combine with morphology (`OPTION_CONFLICT`). Irregular stored spellings (مائة is stored as ميه) defeat a prefix such as `مائ*`. |
 | Boolean | `shamela_search_boolean`: `all_of`, `any_of`, `none_of` | At least one of `all_of` or `any_of`. `total_hits` is exact; `zero_hit_terms` lists words found nowhere. |
-| Relaxing an empty query | `shamela_search_pages`, `options.relax_when_empty` (on by default) | Retries with fewer words, never fewer than half; reports `relaxed_min_match` and `relaxed_of_terms`. Set it to `false` when an empty answer is the answer you need. |
+| Relaxing an empty query | `shamela_search_pages`, `options.relax_when_empty` (on by default) | Retries with fewer words, never fewer than half; reports `relaxed_min_match` and `relaxed_of_terms`. Set it to `false` when an empty answer is the answer you need. If the plain search and this retry both find nothing and the query has six words or fewer, a last retry by Arabic root sets `morphology_fallback: true`; its results are other word forms from the same roots. |
 
 ## Grounding rules
 
