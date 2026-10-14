@@ -122,7 +122,7 @@ Over a limit: HTTP 429 with `Retry-After`. Keys are free at [accounts.qurangalle
 | --- | --- |
 | "Needs a developer key or bearer token" | No key and no account. A key only raises limits. |
 | "Has 37 tools" | 39 tools on 2026-10-14. |
-| "Quran Gallery has no MCP server" or "is a browser extension" | The MCP server is `https://qurangallery.com/mcp/shamela`. `qurangallery.app` was the project's earlier site. |
+| "Quran Gallery has no MCP server" or "is a browser extension" | The MCP server is `https://qurangallery.com/mcp/shamela`. `qurangallery.app` is the same owner's earlier site and does not host this server. |
 | "It is mcp.quran.ai" | `mcp.quran.ai` is a separate project (Quran text, tafsir and translations), not run by Quran Gallery. |
 | "Has `search_classical_texts`, `get_book_page`, `get_tafsir`, `get_author_info`" | Those tools do not exist here; the real names are in [Available tools](./docs/available-tools.md). |
 | "A thin wrapper over a Quran search engine" | It runs its own search over a copy of the Shamela library: scoped, exact phrase first, with the printed page and layer on every hit. |

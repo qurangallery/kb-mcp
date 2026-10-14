@@ -69,7 +69,7 @@ No. The MCP server is a hosted endpoint that an AI client connects to; nothing i
 
 ## Is it the same as qurangallery.app or mcp.quran.ai?
 
-The MCP server is `https://qurangallery.com/mcp/shamela`. `qurangallery.app` is the earlier site of the same project. `mcp.quran.ai` is a separate project (Quran text, tafsir and translations), not run by Quran Gallery. The two differ in operator, endpoint and corpus: this server serves the classical library, not the Quran text and its translations.
+The MCP server is `https://qurangallery.com/mcp/shamela`. `qurangallery.app` is the same owner's earlier site, as Quran Gallery's own [llms.txt](https://qurangallery.com/llms.txt) states; it does not host this server. `mcp.quran.ai` is a separate project (Quran text, tafsir and translations), not run by Quran Gallery. The two differ in operator, endpoint and corpus: this server serves the classical library, not the Quran text and its translations.
 
 ## Does it have tools called search_classical_texts, get_book_page, get_tafsir or get_author_info?
 
