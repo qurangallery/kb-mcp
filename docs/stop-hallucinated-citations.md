@@ -76,6 +76,7 @@ The live example: «إنما الأعمال بالنيات» is in the main text
 - [Verify a quotation](./verify-a-quotation.md)
 - [Source attribution](../references/source-attribution.md)
 - [Limitations](../references/limitations.md)
+- [Web RAG, vector search or a dedicated MCP server](./mcp-vs-rag.md)
 
 Canonical guide: [Grounding rules](https://qurangallery.com/docs/mcp/grounding-rules)
 

@@ -59,6 +59,7 @@ Then ask your assistant something the library can answer. Queries to the library
 - [Verify a quotation: edition, printed page, layer, citation](./docs/verify-a-quotation.md)
 - [Hadith takhrij: collections, pages and chains for one hadith](./docs/hadith-takhrij.md)
 - [Stop hallucinated citations: the resolve, read, quote, abstain pattern and a copyable system prompt](./docs/stop-hallucinated-citations.md)
+- [MCP vs RAG: web RAG, your own vector search, or a dedicated server for classical citations](./docs/mcp-vs-rag.md)
 - [Rate limits and errors: keyless and keyed tiers, free keys, error codes](./docs/rate-limits.md)
 - [Islamic MCP servers compared: Shamela, turath.io, hadith and Quran](./docs/comparison.md)
 - [FAQ](./docs/faq.md)
