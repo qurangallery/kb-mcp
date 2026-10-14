@@ -1,7 +1,7 @@
 # What will Quran Gallery's Shamela MCP server not do, and what should I check before trusting a result?
 
 > It finds and cites classical Arabic texts. It does not grade hadith, give rulings, translate, or stop an assistant from misreading a real page.
-> Before trusting a result, check four things: printed or automatic pagination, main text or footnote, exact phrase or loose match, and which scope was searched.
+> Before trusting a result, check seven things: printed or automatic pagination, main text or footnote, exact phrase or near match, which printing, which scope was searched, whether it is the book asked for, and whether two hits are one text.
 
 The server guarantees one thing: the passage, the book and the page it returns were retrieved from the library, not composed. Everything an assistant says around that passage is the assistant's own reading.
 
