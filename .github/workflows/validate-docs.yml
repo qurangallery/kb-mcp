@@ -1,0 +1,37 @@
+name: Validate docs
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          fail: true
+          args: >-
+            --no-progress
+            --max-retries 3
+            --accept 200,403,405,429
+            --exclude '^https://qurangallery\.com/mcp/shamela'
+            --exclude '^https://api\.makteb\.org/mcp'
+            --exclude '^https://shamela\.link/mcp'
+            --exclude '^https://mcp\.tafsir\.net/mcp'
+            --exclude 'shamela\.ws/book/\{'
+            './**/*.md'
+            'server.json'
+            'CITATION.cff'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

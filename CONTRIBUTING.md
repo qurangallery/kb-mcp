@@ -24,6 +24,8 @@ Small corrections are welcome. Keep to the conventions the existing pages follow
 - English only. Write Arabic terms in transliteration with the Arabic script on first use.
 - Use relative links between files in this repository.
 
+The `Validate docs` workflow checks every link on each push and pull request, and weekly.
+
 ## Licence
 
 By contributing you agree that your contribution is licensed under [CC BY 4.0](./LICENSE), the licence of this documentation.
