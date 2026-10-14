@@ -45,6 +45,7 @@ Then ask your assistant something the library can answer. Queries to the library
 
 ## Documentation
 
+- [Getting started: which client or setup you need, copy-paste configs, transports](./docs/getting-started.md)
 - [Connect Claude, Claude Desktop and Claude Code](./docs/connect-claude.md)
 - [Connect ChatGPT (including deep research)](./docs/connect-chatgpt.md)
 - [Connect Cursor](./docs/connect-cursor.md)
