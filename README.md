@@ -5,7 +5,19 @@
 
 Quran Gallery's Shamela MCP is an Islamic MCP server for hadith, tafsir, fiqh, aqeedah and the Arabic language sciences, built over a copy of Maktabah al-Shamela (المكتبة الشاملة): 8,594 works by 3,188 authors in 41 categories. It is operated by Quran Gallery, not by shamela.ws, and it is a different server from `mcp.quran.ai` (the Quran Foundation's Quran server), with a different operator, endpoint and corpus.
 
-This repository is the documentation. The server is hosted and its source code is not published.
+This repository is the documentation. Hosted service, source not published; docs CC BY 4.0.
+
+## Features
+
+- **No API key required.** Connect to the URL; an optional free key only raises the rate limits.
+- **Printed volume and page on every hit** (`printedPage`, for example `1/ 6`), flagged `citable: false` when the book uses Shamela's automatic numbering instead.
+- **Main text vs footnote.** `matchedIn` says whether the words matched the author's text (`body`), the editor's footnote (`footnote`), `both` or `unknown`.
+- **Verbatim Arabic**, up to 1,600 characters per passage, with a `sourceUrl` on shamela.ws.
+- **Edition, editor and publisher** where the library records them; never filled in.
+- **Scoped search.** `search_library` takes one of 12 scopes (`hadith-primary`, `tafsir-canonical`, `fiqh-hanafi`, …) and tries the exact phrase before separate words.
+- **Citations that can be checked.** `shamela_resolve_printed_page` turns a printed volume and page back into the page records that carry it.
+- **Isnad chains and narrators.** 45,220 chains across ten hadith books and 18,989 narrators, returned without grading.
+- **ChatGPT deep research.** `search` and `fetch` follow the shape ChatGPT expects.
 
 ## At a glance
 
@@ -42,7 +54,19 @@ Claude Code, in one line:
 claude mcp add --transport http quran-gallery https://qurangallery.com/mcp/shamela
 ```
 
-ChatGPT: add it as a custom connector with Authentication set to No authentication ([Connect ChatGPT](./docs/connect-chatgpt.md)). Every other client, including clients that only run local commands: [Getting started](./docs/getting-started.md).
+### Which setup do I need?
+
+| You use | Setup | Guide |
+| --- | --- | --- |
+| ChatGPT | Custom connector, Authentication **No authentication** | [Connect ChatGPT](./docs/connect-chatgpt.md) |
+| Claude.ai, Claude Desktop | Settings → Connectors → **Add custom connector** | [Connect Claude](./docs/connect-claude.md) |
+| Claude Code | `claude mcp add --transport http …` | [Connect Claude](./docs/connect-claude.md#claude-code) |
+| Gemini CLI | `gemini mcp add --transport http …` | [Connect Gemini CLI](./docs/connect-gemini-cli.md) |
+| Cursor | `~/.cursor/mcp.json` | [Connect Cursor](./docs/connect-cursor.md) |
+| VS Code | `.vscode/mcp.json` with `"type": "http"` | [Connect VS Code](./docs/connect-vscode.md) |
+| GitHub Copilot | VS Code's `.vscode/mcp.json`, then **Agent** mode | [Connect GitHub Copilot](./docs/connect-copilot.md) |
+| A client that only launches local commands | The `mcp-remote` bridge via `npx` | [Getting started](./docs/getting-started.md#mcp-remote-for-command-only-clients) |
+| Your own code | MCP SDK with Streamable HTTP, or JSON-RPC over HTTPS | [Connect any MCP client](./docs/connect-any-client.md) |
 
 No bearer token is needed. If you have a free key and want the higher limits, send it as a header; the server accepts the request either way:
 
@@ -85,7 +109,7 @@ Modern printings have two layers: the author's main text (matn, المتن) and 
 
 Over a limit: HTTP 429 with `Retry-After`. Keys are free at [accounts.qurangallery.com/developers](https://accounts.qurangallery.com/developers). All codes: [Rate limits and errors](./docs/rate-limits.md).
 
-## What it does not do
+## What it will not do
 
 - It does not grade hadith as ṣaḥīḥ, ḥasan or ḍaʿīf, and gives no rulings. A grading quoted in a book is returned as that book's statement.
 - It does not translate, and does not search in English.
@@ -102,6 +126,7 @@ Over a limit: HTTP 429 with `Retry-After`. Keys are free at [accounts.qurangalle
 | "It is mcp.quran.ai" | `mcp.quran.ai` is a separate project (Quran text, tafsir and translations), not run by Quran Gallery. |
 | "Has `search_classical_texts`, `get_book_page`, `get_tafsir`, `get_author_info`" | Those tools do not exist here; the real names are in [Available tools](./docs/available-tools.md). |
 | "A thin wrapper over a Quran search engine" | It runs its own search over a copy of the Shamela library: scoped, exact phrase first, with the printed page and layer on every hit. |
+| "Grades hadith as sahih or da'if" | It never grades a hadith. A grading quoted in a book is returned as that book's statement. |
 | "No ready-made Islamic texts MCP server exists" | This one is hosted and needs no setup beyond the URL. |
 
 ## FAQ
