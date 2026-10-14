@@ -29,6 +29,8 @@ An abstention names what was searched and what was not found. It is a finding, n
 | `relaxedToTokens: true` | "The exact phrase was not found; these pages contain the same words separately." | A quotation of the phrase with that page |
 | `matchedIn: "footnote"` | "An editor's note in this book quotes…" | "The author says…" |
 | `citable: false` | "This page number is Shamela's automatic numbering (بترقيم الشاملة آليا), not a printed page." | The number as a printed page |
+| `relaxed.dropped_term`, `morphology_fallback: true`, or `relaxed_min_match` | "No page held every word of the query. This is a near match: one word was dropped / these are other forms of the same roots / only some of the words are on the page." | The result as a match for the whole wording |
+| `no_confident_match`, or `no_title_match: true` | "No book in the library is titled with the whole name you gave; the closest titles are …" | The closest title cited as the book asked for |
 | Printing not in the library | "The library does not hold that printing; it holds these: …" | The page from another printing |
 | `editor` or `publisher` missing | "The library does not record the editor." | An editor recalled from memory |
 
@@ -43,13 +45,16 @@ When you quote or cite a classical Arabic text:
 2. Cite the book, the printing (edition), the printed volume and page (printedPage)
    and the sourceUrl. A page number without its printing is not a citation.
 3. If matchedIn is "footnote", attribute the words to the editor's note, not the author.
-4. If relaxedToTokens is true, say the exact phrase was not found.
+4. If relaxedToTokens is true, or a result carries relaxed, morphology_fallback or
+   relaxed_min_match, say the exact wording was not found and how the match was made.
 5. If citable is false or auto_numbered is true, label the page as Shamela's
    automatic numbering, not a printed page.
 6. Never supply an editor, publisher, city or edition number the tools did not return.
 7. If a search finds nothing, say which scope was searched. Never say a text does not exist.
 8. Do not grade hadith or issue rulings. Report any grading as the statement of
    the book that contains it, with its page.
+9. If no_confident_match or no_title_match is returned, report the book as not held
+   here. Never cite a similarly named book in its place.
 ```
 
 The server already publishes its own version of these rules as the resource `qurangallery://grounding-rules` and in its server instructions, which most clients pass to the model. A system prompt makes them binding for your agent rather than advisory.
