@@ -155,7 +155,7 @@ Never send a placeholder. Any bearer token is checked, so `Bearer qg_sk_your_key
 ## Related
 
 - [Available tools](./available-tools.md)
-- [Rate limits and errors](./rate-limits.md)
+- [Troubleshooting](./troubleshooting.md)
 - [Connect any MCP client](./connect-any-client.md)
 
 Canonical guide: [Getting started with the Quran Gallery MCP server](https://qurangallery.com/docs/mcp/getting-started)
