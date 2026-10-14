@@ -49,6 +49,9 @@ Then ask your assistant something the library can answer. Queries to the library
 - [Connect ChatGPT (including deep research)](./docs/connect-chatgpt.md)
 - [Connect Cursor](./docs/connect-cursor.md)
 - [Connect VS Code](./docs/connect-vscode.md)
+- [Connect Gemini CLI](./docs/connect-gemini-cli.md)
+- [Connect GitHub Copilot](./docs/connect-copilot.md)
+- [Connect any MCP client (SDK, mcp-remote, Inspector, curl, Python)](./docs/connect-any-client.md)
 
 The full documentation is also published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
 
