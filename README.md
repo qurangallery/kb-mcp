@@ -56,6 +56,7 @@ Then ask your assistant something the library can answer. Queries to the library
 - [Search and citations: scopes, Arabic search, main text vs footnotes, grounding rules](./docs/search-and-citations.md)
 - [Verify a quotation: edition, printed page, layer, citation](./docs/verify-a-quotation.md)
 - [Hadith takhrij: collections, pages and chains for one hadith](./docs/hadith-takhrij.md)
+- [Limits and errors: keyless and keyed tiers, free keys, error codes](./docs/limits-and-errors.md)
 
 The full documentation is also published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
 
