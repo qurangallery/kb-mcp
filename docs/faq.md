@@ -98,4 +98,5 @@ When the library service behind the server is unreachable, `tools/list` returns 
 Canonical guide: [Getting started with the Quran Gallery MCP server](https://qurangallery.com/docs/mcp/getting-started)
 
 ---
+
 Last reviewed: 2026-10-14

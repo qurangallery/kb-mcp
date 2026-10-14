@@ -77,4 +77,5 @@ Do not commit a workspace file that contains a key.
 Canonical guide: [Connect VS Code to the Islamic library](https://qurangallery.com/docs/mcp/vscode)
 
 ---
+
 Last reviewed: 2026-10-14

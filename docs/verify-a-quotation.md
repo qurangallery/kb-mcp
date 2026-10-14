@@ -139,4 +139,5 @@ The response includes `components` with `auto_numbered: false`. For a book on Sh
 Canonical guide: [Grounding rules for answers built on the library](https://qurangallery.com/docs/mcp/grounding-rules)
 
 ---
+
 Last reviewed: 2026-10-14

@@ -126,4 +126,5 @@ Each printing of a work is its own entry with its own `book_id`; the edition is 
 Canonical guide: [Choosing a scope](https://qurangallery.com/docs/mcp/scopes)
 
 ---
+
 Last reviewed: 2026-10-14

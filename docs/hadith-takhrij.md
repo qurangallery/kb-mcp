@@ -124,4 +124,5 @@ It contains no verdict on authenticity. For that, consult a qualified scholar an
 Canonical guide: [Hadith takhrij with MCP](https://qurangallery.com/docs/mcp/hadith-takhrij)
 
 ---
+
 Last reviewed: 2026-10-14

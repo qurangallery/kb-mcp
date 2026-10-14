@@ -97,4 +97,5 @@ Keep the key out of any settings file you commit.
 Canonical guide: [Connect Gemini CLI to the Islamic library](https://qurangallery.com/docs/mcp/gemini-cli)
 
 ---
+
 Last reviewed: 2026-10-14

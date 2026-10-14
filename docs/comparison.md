@@ -78,4 +78,5 @@ These do not cover the Shamela library.
 Canonical guide: [Quran Gallery MCP overview](https://qurangallery.com/docs/mcp/overview)
 
 ---
+
 Last reviewed: 2026-10-14

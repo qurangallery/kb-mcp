@@ -59,4 +59,5 @@ A key is never required. A free key raises the limit from 10 to 60 tool calls a 
 Canonical guide: [GitHub Copilot in VS Code](https://qurangallery.com/docs/mcp/copilot)
 
 ---
+
 Last reviewed: 2026-10-14

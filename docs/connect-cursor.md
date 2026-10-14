@@ -73,4 +73,5 @@ Keep any file that holds a key out of git.
 Canonical guide: [Connect Cursor to the Islamic library](https://qurangallery.com/docs/mcp/cursor)
 
 ---
+
 Last reviewed: 2026-10-14

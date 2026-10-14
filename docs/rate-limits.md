@@ -109,4 +109,5 @@ If the library service behind the server is unreachable, `tools/list` returns no
 Canonical guide: [Limits and errors](https://qurangallery.com/docs/mcp/limits-and-errors)
 
 ---
+
 Last reviewed: 2026-10-14
