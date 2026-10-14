@@ -142,6 +142,10 @@ From the Bukhari hit above:
 
 It names the work, the printing, the printed volume and page, the layer, and the library the text came from.
 
+## Copyright of the editions
+
+A modern printing of a classical work has two layers of authorship. The author's text is centuries old; the edited edition, with its footnotes, indexes and typesetting, is the work of an editor and a publisher, whose rights stay with them. Nothing here grants a right in the library's text. The CC BY 4.0 licence of this repository covers the documentation only, and the server returns excerpts for citation and checking, not for republication. For any use beyond a short quotation with its citation, go to the publisher, shown in a hit's `publisher` field when the library records it.
+
 ## Credit and excerpts
 
 The texts, ids and catalogue data are Maktabah al-Shamela's (المكتبة الشاملة). Quran Gallery runs the MCP server over its own copy of the library and is not shamela.ws; `sourceUrl` lets any reader open the same page there. Searches return page-scoped excerpts capped at about 1,600 characters and the reading tools return single pages or short ranges; no call exports a book. Modern printings contain the editor's own work, so quote what the claim needs, with the citation, rather than reproducing pages at length.
