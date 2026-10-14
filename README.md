@@ -52,6 +52,7 @@ Then ask your assistant something the library can answer. Queries to the library
 - [Connect Gemini CLI](./docs/connect-gemini-cli.md)
 - [Connect GitHub Copilot](./docs/connect-copilot.md)
 - [Connect any MCP client (SDK, mcp-remote, Inspector, curl, Python)](./docs/connect-any-client.md)
+- [Tools reference: all 39 tools, 3 prompts and 1 resource](./docs/tools.md)
 
 The full documentation is also published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
 
