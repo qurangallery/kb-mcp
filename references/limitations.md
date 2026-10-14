@@ -24,10 +24,11 @@ The server guarantees one thing: the passage, the book and the page it returns w
 
 1. **Printed or automatic pagination?** 7,177 of the 8,594 works are paginated as a printed edition (يوافق المطبوع). The other 1,417 use Shamela's automatic numbering (بترقيم الشاملة آليا), which matches no printed copy. Look for `citable: false` from `shamela_resolve_work` or `shamela_resolve_printed_page`, or `auto_numbered: true` from `shamela_get_citation`.
 2. **Main text or footnote?** `matchedIn: "footnote"` means the words are in the editor's apparatus (tahqiq, تحقيق), not the author's text (matn, متن). Attribute them to the note.
-3. **Exact phrase or loose match?** `relaxedToTokens: true` means the exact phrase was not found; the page only carries the same words separately. It is not a quotation of the phrase.
+3. **Exact phrase or loose match?** `relaxedToTokens: true` means the exact phrase was not found; the page only carries the same words separately. It is not a quotation of the phrase. The same goes for `relaxed_min_match` / `relaxed_of_terms` (no page held every word), `relaxed.dropped_term` from `shamela_search_hadith` (one word was left out of the query) and `morphology_fallback: true` from `shamela_search_pages` (other word forms from the same roots). Say how the match was made.
 4. **Which printing?** Page numbers belong to one printing. `edition` and the entry name say which; a page from one printing cannot be cited against another.
 5. **Which scope?** "Not in the eight primary collections" is a finding. "Does not exist" is not.
-6. **One source or two?** Hits in two entries of the same work (`same_group`, `edition_groups`) are the same text twice.
+6. **Is this the book asked for?** `shamela_resolve` with `no_confident_match.note`, or `shamela_search_books` with `no_title_match: true`, means no title carries the whole name asked for. Report the book as not held here; do not cite a near-miss title in its place.
+7. **One source or two?** Hits in two entries of the same work (`same_group`, `edition_groups`) are the same text twice.
 
 Field details: [Source attribution](./source-attribution.md).
 
