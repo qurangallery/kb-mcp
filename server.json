@@ -1,0 +1,31 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.qurangallery/shamela",
+  "title": "Quran Gallery: Classical Islamic Library",
+  "description": "Search 8,594 classical Islamic books; verbatim Arabic cited by edition, volume and page. No key.",
+  "websiteUrl": "https://qurangallery.com/mcp",
+  "version": "0.2.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://qurangallery.com/mcp/shamela",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Optional. Free Quran Gallery API key as a bearer token: 60 tool calls a minute with no daily cap, instead of the keyless 10 a minute and 200 a day. Create one at https://accounts.qurangallery.com/developers. Omit the header to use the server with no account.",
+          "value": "Bearer {api_key}",
+          "isRequired": false,
+          "isSecret": true,
+          "variables": {
+            "api_key": {
+              "description": "Optional Quran Gallery API key (starts with qg_sk_).",
+              "isRequired": false,
+              "isSecret": true,
+              "placeholder": "qg_sk_..."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
