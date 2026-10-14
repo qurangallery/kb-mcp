@@ -11,7 +11,7 @@ The server guarantees one thing: the passage, the book and the page it returns w
 | --- | --- |
 | Grade a hadith as ṣaḥīḥ (صحيح), ḥasan (حسن) or ḍaʿīf (ضعيف) | Where a book or an editor's footnote states a grading, that is returned as text, and belongs to whoever wrote it. `shamela_get_narrator` returns Ibn Hajar's and al-Dhahabi's verdicts on narrators from the register, attributed to them. |
 | Give a ruling or fatwa (فتوى) | A passage from a fiqh manual is evidence of what that manual says, not a ruling for anyone's situation. |
-| Stop an assistant from misattributing a passage | The page is real; the sentence built around it may not be a fair reading. A checking workflow: [Verify a quotation](../docs/verify-a-quotation.md). |
+| Stop an assistant from misattributing a passage | The page is real; the sentence built around it may not be a fair reading. Rules for assistants: [Stop hallucinated citations](../docs/stop-hallucinated-citations.md). |
 | Replace a scholar | Retrieval is not understanding. |
 | Export a book | Searches return page-scoped excerpts of about 1,600 characters at most; reading tools return one page or a short range (5 pages keyless, 20 with a key). No call returns a whole book. |
 | Search in English or transliteration | Queries must contain Arabic words. The assistant must translate the search terms. |
