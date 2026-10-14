@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you cite this documentation, please use the metadata below."
+title: "Quran Gallery Shamela MCP server documentation"
+type: software
+abstract: "Documentation for the Quran Gallery Shamela MCP server: a hosted, no-account Model Context Protocol server over 8,594 classical Islamic works from Maktabah al-Shamela that returns the printed volume and page, verbatim Arabic and edition metadata."
+authors:
+  - name: "Quran Gallery"
+    website: "https://qurangallery.com"
+url: "https://qurangallery.com/mcp"
+repository-code: "https://github.com/qurangallery/kb-mcp"
+license: CC-BY-4.0
+date-released: "2026-10-14"
+keywords:
+  - mcp
+  - model-context-protocol
+  - shamela
+  - islamic-texts
+  - hadith
+  - tafsir
+  - fiqh
+  - arabic
+  - citations

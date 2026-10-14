@@ -76,6 +76,10 @@ The full documentation is also published at [qurangallery.com/docs/mcp](https://
 
 [`server.json`](./server.json) describes the remote server in the MCP Registry format (schema 2025-12-11) under the name `com.qurangallery/shamela`, with the optional `Authorization` header declared as not required.
 
+## Contributing and citing
+
+Corrections are welcome as issues or pull requests: see [CONTRIBUTING.md](./CONTRIBUTING.md). To cite this documentation, use [CITATION.cff](./CITATION.cff) or the "Cite this repository" button on GitHub.
+
 ## License
 
 The documentation in this repository is licensed under [Creative Commons Attribution 4.0 International](./LICENSE) (CC BY 4.0). The license covers this documentation only. It does not cover the server software, which is not published, or the texts in the library, whose editions belong to their publishers.
