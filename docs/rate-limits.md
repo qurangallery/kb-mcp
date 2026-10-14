@@ -68,6 +68,8 @@ A request without a key is never refused for lacking one. A key that is sent is 
 | 400 | `-32600` | JSON, but not a JSON-RPC 2.0 request (no `jsonrpc: "2.0"` or `method`, or a batch) | One request per POST; batching is not supported |
 | 500 | `-32603` | Unexpected server fault | Retry once after a few seconds |
 | 502, 504 | none | From the proxy in front of the server while it restarts or is unreachable | Treat like 500 |
+| 405 | none | A `GET` to the endpoint (an older HTTP+SSE client opening an event stream), or a `POST` to the web page `/mcp/` | Use Streamable HTTP and `POST` to `https://qurangallery.com/mcp/shamela`; see [Troubleshooting](./troubleshooting.md#connection-problems) |
+| 308 | none | A `POST` to the bare `https://qurangallery.com/mcp`, redirected to the web page `/mcp/`; many clients drop the body on redirect | Use the full endpoint `https://qurangallery.com/mcp/shamela` |
 
 Example: a request with an invalid key returns HTTP 401 and
 
