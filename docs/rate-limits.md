@@ -1,7 +1,7 @@
 # What are the rate limits and error codes of the Quran Gallery MCP server?
 
 > Without a key: 10 tool calls a minute and 200 a day per IP address. With a free key: 60 a minute per key and no daily cap.
-> Errors are JSON-RPC errors with `id: null`; recoverable mistakes (bad scope, empty or non-Arabic query) come back as tool results marked `isError`.
+> Errors are JSON-RPC errors with `id: null`; recoverable mistakes (bad scope, empty or non-Arabic query, invalid arguments) come back as tool results marked `isError`.
 
 ## Rate limits
 
@@ -85,6 +85,7 @@ Once a request is accepted, a failure has one of two shapes.
 | --- | --- |
 | Missing or invalid `scope` | Tool error (`isError: true`), listing the valid scopes |
 | Empty `query` | Tool error |
+| Invalid arguments to a `shamela_*` tool (a zero `book_id`, a string where `scope` must be an object) | Tool error whose text starts `BAD_ARG:` and names the argument and what to send |
 | Query with no Arabic words | Tool error, asking for an Arabic query |
 | Library drops out during a call | Tool error |
 | Library already unreachable when you call | Protocol error `-32601`, HTTP 200 |
