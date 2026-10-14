@@ -58,6 +58,7 @@ The numbers and headers are in [Rate limits and errors](./rate-limits.md).
 | --- | --- | --- |
 | Tool error: "The library is Arabic, so the query must contain Arabic words. Translate the search terms into Arabic and call again, …" | `search_library` or `search` was given English or transliterated words. | Have the assistant translate the search terms into Arabic. You can still ask in any language. |
 | `BAD_ARG: Query has no searchable Arabic words.` | The same mistake on `shamela_search_phrase`. | Same fix. |
+| `BAD_ARG: <tool> was called with invalid arguments. …` | A `shamela_*` tool got an argument it cannot use, such as `book_id` 0 or a string where `scope` must be an object. The text names the argument and what to send. | Correct that argument and call again. |
 | Tool error: "scope is required and must be one of: hadith-primary, tafsir-canonical, fiqh-hanafi, …" | `search_library` was called without `scope` or with a name that does not exist. | Pick one of the 12 scopes; see [Available tools](./available-tools.md). |
 | `Unrecognized key(s) in object: 'options'` | `search_in` was put in the wrong place. `shamela_search_phrase` and `shamela_search_boolean` take it at the top level; `shamela_search_pages` takes it inside `options`. | Move it to where that tool's schema expects it. Unknown arguments are rejected, not ignored. |
 | Protocol error `-32601` "Unsupported method" or an unknown tool | The method or tool name does not exist. Names such as `search_classical_texts`, `get_book_page` or `get_tafsir` are not tools on this server. | Use names from `tools/list`. |
@@ -70,6 +71,8 @@ The numbers and headers are in [Rate limits and errors](./rate-limits.md).
 ## The search found nothing, or found the wrong thing
 
 - **`relaxedToTokens: true`.** The exact phrase was not found; the pages only carry the same words separately. Do not present such a hit as a quotation.
+- **`relaxed`, `morphology_fallback: true` or `relaxed_min_match` on a raw search.** The result is a near match: a word was dropped (`shamela_search_hadith`, see `relaxed.dropped_term`), other word forms from the same roots were searched (`shamela_search_pages`), or no page held every word. Say how the match was made.
+- **`no_confident_match` or `no_title_match: true`.** No book title carries the whole name asked for. Report the book as not held here rather than citing the closest title.
 - **Empty `passages`.** The note reads "Neither the exact phrase nor its words together appear anywhere in this scope." That is a finding about the books in that scope, not about the whole library. Try another scope, a shorter phrase, or a different spelling.
 - **The words are in a footnote.** `matchedIn: "footnote"` means an editor's note on the page carries them, not the author's text.
 - **The unscoped `search` or `shamela_search_pages` ranks odd books first.** Unscoped ranking is by how often the words occur, so a poetry anthology can outrank Sahih al-Bukhari. Use `search_library` with a scope.
