@@ -138,7 +138,7 @@ Such a page number cannot be checked against any printed copy. Cite it only with
 
 From the Bukhari hit above:
 
-> «إنما الأعمال بالنيات» — al-Bukhari (d. 256 AH), Sahih al-Bukhari, Sultaniyya printing, vol. 1, p. 6 (main text). Via Maktabah al-Shamela, https://shamela.ws/book/1681/10, through Quran Gallery's Shamela MCP.
+> «إنما الأعمال بالنيات» — al-Bukhari (d. 256 AH), Sahih al-Bukhari, Sultaniyya printing, vol. 1, p. 6 (main text). Via Maktabah al-Shamela, <https://shamela.ws/book/1681/10>, through Quran Gallery's Shamela MCP.
 
 It names the work, the printing, the printed volume and page, the layer, and the library the text came from.
 

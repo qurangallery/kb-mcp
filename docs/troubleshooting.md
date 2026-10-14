@@ -38,7 +38,7 @@ The server never refuses a request for lacking a key. It does check any key it i
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | HTTP 401, `-32001`, "That API key is not valid." | The `Authorization` header carries a key that is wrong, deleted, or a placeholder such as `qg_sk_your_key_here`. | Put in a real key, create a new one, or remove the header to use the keyless tier. |
-| HTTP 401, `-32001`, "Send Authorization: Bearer <key>, or no Authorization header at all." | The header is `Bearer` with no key after it. | Same fix. A config template with an empty key slot breaks every request until the slot is filled or removed. |
+| HTTP 401, `-32001`, `Send Authorization: Bearer <key>, or no Authorization header at all.` | The header is `Bearer` with no key after it. | Same fix. A config template with an empty key slot breaks every request until the slot is filled or removed. |
 | HTTP 403, `-32003` | The key is valid but its account is suspended. | Retrying will not help; it is an account matter. |
 | HTTP 503, `-32002`, `Retry-After: 30` | The key could not be verified at that moment, so the request was refused rather than admitted. | Retry after 30 seconds. It does not mean the key is bad. |
 

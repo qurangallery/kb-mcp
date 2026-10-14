@@ -71,9 +71,9 @@ Result summary: `relaxedToTokens: false`, `booksSearched: 8`, `totalMatches: 3`.
 
 | `book` | `printedPage` | `matchedIn` | `matchQuality` | `sourceUrl` |
 | --- | --- | --- | --- | --- |
-| سنن أبي داود - ت الأرنؤوط | `3/ 526` | `footnote` | `exact_phrase` | https://shamela.ws/book/117359/1796 |
-| سنن ابن ماجه - ت الأرنؤوط | `5/ 305` | `body` | `exact_phrase` | https://shamela.ws/book/98138/2939 |
-| صحيح البخاري - ط السلطانية | `1/ 6` | `body` | `exact_phrase` | https://shamela.ws/book/1681/10 |
+| سنن أبي داود - ت الأرنؤوط | `3/ 526` | `footnote` | `exact_phrase` | `https://shamela.ws/book/117359/1796` |
+| سنن ابن ماجه - ت الأرنؤوط | `5/ 305` | `body` | `exact_phrase` | `https://shamela.ws/book/98138/2939` |
+| صحيح البخاري - ط السلطانية | `1/ 6` | `body` | `exact_phrase` | `https://shamela.ws/book/1681/10` |
 
 One passage in full (excerpt shortened here):
 

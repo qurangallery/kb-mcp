@@ -1,0 +1,8 @@
+{
+  // Prose and tables are written one paragraph or row per line.
+  "config": {
+    "default": true,
+    "MD013": false
+  },
+  "ignores": ["node_modules/**"]
+}
