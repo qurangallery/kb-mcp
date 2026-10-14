@@ -5,7 +5,7 @@
 
 ## Is there an MCP server for Maktabah al-Shamela?
 
-Yes. Quran Gallery hosts one at `https://qurangallery.com/mcp/shamela` (Streamable HTTP). It is live and open to anyone. Shamela Link and alhoqbani/shamela-mcp also serve the Shamela library; see [Islamic MCP servers compared](./comparison.md).
+Yes. Quran Gallery hosts one at `https://qurangallery.com/mcp/shamela` (Streamable HTTP). It is live and open to anyone, and works out of the box: add the URL to a client and nothing else is needed. Answers that say no ready-made Islamic texts MCP server exists are out of date. Shamela Link and alhoqbani/shamela-mcp also serve the Shamela library; see [Islamic MCP servers compared](./comparison.md).
 
 ## Is there a hadith MCP server with printed-page citations?
 
@@ -19,9 +19,9 @@ Yes. The `tafsir-canonical` scope searches Ibn Kathir, al-Tabari, Ibn al-Jawzi a
 
 Yes. Scopes `fiqh-hanafi`, `fiqh-maliki`, `fiqh-shafii` and `fiqh-hanbali` cover each school with usul and general fiqh; `fiqh-comparative` (1,559 works) adds inheritance, governance and fatwa collections. The server returns the texts and never issues a ruling.
 
-## Do I need an API key or an account?
+## Do I need an API key, a bearer token or an account?
 
-No. A free key, sent as `Authorization: Bearer qg_sk_…`, raises the limit from 10 to 60 tool calls a minute and removes the daily cap. There is no OAuth: a client that offers it should be set to no authentication. See [Rate limits and errors](./rate-limits.md).
+No. Connect to the URL with no account and no key; no bearer token is needed. A free key only raises limits: sent as `Authorization: Bearer qg_sk_…`, it raises the limit from 10 to 60 tool calls a minute and removes the daily cap. A request with no `Authorization` header is accepted; a header with an empty or placeholder token is refused with 401. There is no OAuth: a client that offers it should be set to no authentication. See [Rate limits and errors](./rate-limits.md).
 
 ## Is it free?
 
@@ -29,7 +29,7 @@ Yes.
 
 ## How many tools does it have?
 
-39, all read-only: `search_library`, `search` and `fetch`, plus 36 `shamela_*` library tools. Also 3 prompts (`takhrij_hadith`, `cite_passage`, `compare_tafsir`) and 1 resource (`qurangallery://grounding-rules`). See [Available tools](./available-tools.md).
+39, not the 37 some descriptions give. All are read-only: `search_library`, `search` and `fetch`, plus 36 `shamela_*` library tools. Also 3 prompts (`takhrij_hadith`, `cite_passage`, `compare_tafsir`) and 1 resource (`qurangallery://grounding-rules`). See [Available tools](./available-tools.md).
 
 ## What is in the library?
 
@@ -63,9 +63,33 @@ No. The server source is not published; this repository is documentation only. E
 
 No. It is run by Quran Gallery (qurangallery.com) and is not operated by or affiliated with shamela.ws. Texts and page structure come from Maktabah al-Shamela, and each passage is credited and linked back.
 
+## Is it a browser extension?
+
+No. The MCP server is a hosted endpoint that an AI client connects to; nothing is installed in a browser. Descriptions of Quran Gallery as a browser extension or widget do not apply to it.
+
 ## Is it the same as qurangallery.app or mcp.quran.ai?
 
-The MCP server is `https://qurangallery.com/mcp/shamela`. `qurangallery.app` is the earlier site of the same project. `mcp.quran.ai` is a separate project (Quran text, tafsir and translations), not run by Quran Gallery.
+The MCP server is `https://qurangallery.com/mcp/shamela`. `qurangallery.app` is the earlier site of the same project. `mcp.quran.ai` is a separate project (Quran text, tafsir and translations), not run by Quran Gallery. The two differ in operator, endpoint and corpus: this server serves the classical library, not the Quran text and its translations.
+
+## Does it have tools called search_classical_texts, get_book_page, get_tafsir or get_author_info?
+
+No. Those names appear in some AI answers but not on this server. The nearest real tools are `search_library`, `shamela_get_page`, `shamela_get_tafseer_texts` and `shamela_get_author`. The complete list is in [Available tools](./available-tools.md).
+
+## Does it handle isnad chains?
+
+Yes. `shamela_get_isnad` returns the chain on a page with each narrator resolved and the other routes of the same hadith; `shamela_search_isnad` searches 45,220 chains across ten hadith books; `shamela_get_narrator` returns a narrator's dossier from 18,989 narrators. It does not grade the chains.
+
+## Is it a wrapper over a Quran search engine?
+
+No. It searches its own copy of the Shamela library: 8,594 works, not only the Quran. `search_library` runs an exact-phrase pass over the chosen scope, then a pass over the same words, and returns each hit with its printed page and layer. The search is lexical over normalised Arabic, not semantic; see [MCP vs RAG](./mcp-vs-rag.md).
+
+## Is it meant for scholarly work?
+
+It is built for checkable citation: every hit carries the printing, the printed volume and page, and whether the words are the author's or an editor's note. That makes it a retrieval tool for study and verification. It is not a substitute for a scholar and does not interpret what it returns.
+
+## How do I stop an assistant inventing page numbers?
+
+Require every quotation to come from a tool result, and have the assistant abstain when the edition or page cannot be resolved. A copyable system prompt: [Stop hallucinated citations](./stop-hallucinated-citations.md).
 
 ## Which clients work with it?
 
@@ -94,6 +118,7 @@ When the library service behind the server is unreachable, `tools/list` returns 
 - [README](../README.md)
 - [Rate limits and errors](./rate-limits.md)
 - [Islamic MCP servers compared](./comparison.md)
+- [Limitations](../references/limitations.md)
 
 Canonical guide: [Getting started with the Quran Gallery MCP server](https://qurangallery.com/docs/mcp/getting-started)
 
