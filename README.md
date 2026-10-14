@@ -66,6 +66,7 @@ Then ask your assistant something the library can answer. Queries to the library
 
 - [Library coverage: categories, scopes, editions and page numbering](./references/library-coverage.md)
 - [Source attribution: every field on a result, editions, citation styles, automatic vs printed pagination](./references/source-attribution.md)
+- [Limitations: what the server will not do, and what to check before trusting a result](./references/limitations.md)
 
 The full documentation is also published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
 
