@@ -54,7 +54,7 @@ Expected: a call to `search_library` (or `search` then `fetch`), with a hit in Ø
 
 ## Optional: a free key
 
-A key is never required. A free key raises the limit from 10 to 60 tool calls a minute, removes the daily cap and lifts the keyless page-range caps. Create one on the **Developers** page of your Quran Gallery account; see [Limits and errors](./limits-and-errors.md).
+A key is never required. A free key raises the limit from 10 to 60 tool calls a minute, removes the daily cap and lifts the keyless page-range caps. Create one on the **Developers** page of your Quran Gallery account; see [Rate limits and errors](./rate-limits.md).
 
 Claude.ai / Desktop: at step 3, keep **No sign-in** and add a request header:
 
@@ -92,7 +92,7 @@ Treat the key like a password and keep it out of git.
 ## Related
 
 - [Available tools](./available-tools.md)
-- [Limits and errors](./limits-and-errors.md)
+- [Rate limits and errors](./rate-limits.md)
 - [Connect any MCP client](./connect-any-client.md)
 
 Canonical guides: [Claude and Claude Desktop](https://qurangallery.com/docs/mcp/claude) Â· [Claude Code](https://qurangallery.com/docs/mcp/claude-code)

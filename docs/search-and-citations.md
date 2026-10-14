@@ -210,7 +210,7 @@ A good citation: al-Bukhārī, Ṣaḥīḥ al-Bukhārī, ṭ. al-Sulṭāniyya,
 - A result proves that this passage is printed in this book at this page in this edition. It does not prove authenticity, that the view is the majority view, or that it answers the question asked.
 - The server guarantees the passage, book and page are real and retrieved; it cannot guarantee the sentence an assistant builds around them is a fair reading.
 - `search` (for ChatGPT deep research) is unscoped and ranks by term frequency.
-- One `search_library` call counts as one request against the rate limit ([Limits and errors](./limits-and-errors.md)).
+- One `search_library` call counts as one request against the rate limit ([Rate limits and errors](./rate-limits.md)).
 
 ## Related
 

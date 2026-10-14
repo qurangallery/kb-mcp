@@ -135,14 +135,14 @@ print(len(tools), hit['book'], hit['printedPage'], hit['matchedIn'])
 
 ## Limitations
 
-- Keyless: 10 tool calls a minute and 200 a day per IP. Connecting and listing are not tool calls; keyless they share a flood ceiling of 60 requests a minute per IP. Details in [Limits and errors](./limits-and-errors.md).
+- Keyless: 10 tool calls a minute and 200 a day per IP. Connecting and listing are not tool calls; keyless they share a flood ceiling of 60 requests a minute per IP. Details in [Rate limits and errors](./rate-limits.md).
 - With a key, a 503 with `-32002` and `Retry-After: 30` means the key service could not be reached; retry rather than treating the key as bad.
 
 ## Related
 
 - [Available tools](./available-tools.md)
 - [Search and citations](./search-and-citations.md)
-- [Limits and errors](./limits-and-errors.md)
+- [Rate limits and errors](./rate-limits.md)
 
 Canonical guide: [Getting started with the Quran Gallery MCP server](https://qurangallery.com/docs/mcp/getting-started)
 

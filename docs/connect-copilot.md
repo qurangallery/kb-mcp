@@ -54,7 +54,7 @@ A key is never required. A free key raises the limit from 10 to 60 tool calls a 
 
 - [Connect VS Code](./connect-vscode.md)
 - [Available tools](./available-tools.md)
-- [Limits and errors](./limits-and-errors.md)
+- [Rate limits and errors](./rate-limits.md)
 
 Canonical guide: [GitHub Copilot in VS Code](https://qurangallery.com/docs/mcp/copilot)
 

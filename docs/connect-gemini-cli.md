@@ -92,7 +92,7 @@ Keep the key out of any settings file you commit.
 
 - [Connect any MCP client](./connect-any-client.md)
 - [Available tools](./available-tools.md)
-- [Limits and errors](./limits-and-errors.md)
+- [Rate limits and errors](./rate-limits.md)
 
 Canonical guide: [Connect Gemini CLI to the Islamic library](https://qurangallery.com/docs/mcp/gemini-cli)
 

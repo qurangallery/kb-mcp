@@ -113,7 +113,7 @@ It contains no verdict on authenticity. For that, consult a qualified scholar an
 - Takhrij keys exist only in the ten books the hadith-key index covers (`key_index_books`), so a hadith found on 1,746 pages still yields takhrij from those ten. A hadith outside them is found by wording only. Pass `search_all_categories: true` to find who cites a hadith across the whole library rather than who narrates it.
 - The isnad index also covers ten books: Sahih al-Bukhari (1681), Sahih Muslim (711), Sunan Abi Dawud (654), Sunan al-Tirmidhi (7895), Sunan al-Nasa'i (829), Muwatta' Malik (28107), Musnad al-Tayalisi (1456), al-Muntaqa of Ibn al-Jarud (627 and 13071) and ʿIlal al-Tirmidhi (642).
 - `shamela_search_hadith` scans a limited number of pages for keys (`max_pages_scanned`, 1–50, default 20).
-- A full takhrij is several tool calls; keyless use allows 10 a minute ([Limits and errors](./limits-and-errors.md)).
+- A full takhrij is several tool calls; keyless use allows 10 a minute ([Rate limits and errors](./rate-limits.md)).
 
 ## Related
 

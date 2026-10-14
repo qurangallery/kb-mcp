@@ -121,7 +121,7 @@ curl -s https://qurangallery.com/mcp/shamela \
 
 - [Search and citations](./search-and-citations.md)
 - [Verify a quotation](./verify-a-quotation.md)
-- [Limits and errors](./limits-and-errors.md)
+- [Rate limits and errors](./rate-limits.md)
 
 Canonical guide: [MCP tools for classical Arabic books: the full list](https://qurangallery.com/docs/mcp/tools)
 

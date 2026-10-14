@@ -74,7 +74,7 @@ Expected: a hit in صحيح البخاري, ط السلطانية (Sahih al-Bukh
 
 ## Limitations
 
-- ChatGPT's custom-server form offers only OAuth or no authentication, with no field for a bearer header. ChatGPT therefore stays on the keyless tier (10 tool calls a minute, 200 a day). To use a free key, connect from a client that can send headers; see [Limits and errors](./limits-and-errors.md).
+- ChatGPT's custom-server form offers only OAuth or no authentication, with no field for a bearer header. ChatGPT therefore stays on the keyless tier (10 tool calls a minute, 200 a day). To use a free key, connect from a client that can send headers; see [Rate limits and errors](./rate-limits.md).
 - Library queries must contain Arabic words; ChatGPT translates English terms first.
 
 ## Related

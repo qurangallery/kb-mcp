@@ -128,7 +128,7 @@ The response includes `components` with `auto_numbered: false`. For a book on Sh
 
 - This establishes where a passage is printed and in which layer. It does not establish that the passage is authentic, that any attribution inside it is sound, or that it was read fairly.
 - City of publication and edition number are never stored, so a citation cannot include them from this library.
-- Keyless use allows 10 tool calls a minute; a full verification is four calls ([Limits and errors](./limits-and-errors.md)).
+- Keyless use allows 10 tool calls a minute; a full verification is four calls ([Rate limits and errors](./rate-limits.md)).
 
 ## Related
 

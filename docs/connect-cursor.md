@@ -67,7 +67,7 @@ Keep any file that holds a key out of git.
 ## Related
 
 - [Connect VS Code](./connect-vscode.md)
-- [Limits and errors](./limits-and-errors.md)
+- [Rate limits and errors](./rate-limits.md)
 - [Connect any MCP client](./connect-any-client.md)
 
 Canonical guide: [Connect Cursor to the Islamic library](https://qurangallery.com/docs/mcp/cursor)

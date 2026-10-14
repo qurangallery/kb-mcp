@@ -21,7 +21,7 @@ Yes. Scopes `fiqh-hanafi`, `fiqh-maliki`, `fiqh-shafii` and `fiqh-hanbali` cover
 
 ## Do I need an API key or an account?
 
-No. A free key, sent as `Authorization: Bearer qg_sk_…`, raises the limit from 10 to 60 tool calls a minute and removes the daily cap. There is no OAuth: a client that offers it should be set to no authentication. See [Limits and errors](./limits-and-errors.md).
+No. A free key, sent as `Authorization: Bearer qg_sk_…`, raises the limit from 10 to 60 tool calls a minute and removes the daily cap. There is no OAuth: a client that offers it should be set to no authentication. See [Rate limits and errors](./rate-limits.md).
 
 ## Is it free?
 
@@ -92,7 +92,7 @@ When the library service behind the server is unreachable, `tools/list` returns 
 ## Related
 
 - [README](../README.md)
-- [Limits and errors](./limits-and-errors.md)
+- [Rate limits and errors](./rate-limits.md)
 - [Islamic MCP servers compared](./comparison.md)
 
 Canonical guide: [Getting started with the Quran Gallery MCP server](https://qurangallery.com/docs/mcp/getting-started)
