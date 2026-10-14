@@ -121,9 +121,9 @@ Passage fields:
 
 To read the whole page, pass `bookId` and `pageId` to `shamela_get_page`.
 
-## Main text or footnote
+## Main text (matn) vs editor's footnote (tahqiq): the matchedIn field
 
-Modern printings carry two layers: the author's text (matn, المتن) and the editor's footnotes (الحواشي). In the example above, the Abu Dawud hit at `3/ 526` is `matchedIn: "footnote"`. The words sit in a note quoting al-Khattabi's commentary («قال الخطابي: قوله: إنما الأعمال بالنيات…»); Abu Dawud's own text on that page has «بالنية». Presenting that note as Abu Dawud's words would be a false attribution built from true parts.
+Modern printings carry two layers: the author's text (matn, المتن) and the editor's footnotes (الحواشي), the apparatus of the edition's tahqiq (التحقيق). `matchedIn` on every `search_library` passage says which layer the words were found in: `body`, `footnote`, `both` or `unknown`. In the example above, the Abu Dawud hit at `3/ 526` is `matchedIn: "footnote"`. The words sit in a note quoting al-Khattabi's commentary («قال الخطابي: قوله: إنما الأعمال بالنيات…»); Abu Dawud's own text on that page has «بالنية». Presenting that note as Abu Dawud's words would be a false attribution built from true parts.
 
 | `matchedIn` | Say |
 | --- | --- |
@@ -221,4 +221,5 @@ A good citation: al-Bukhārī, Ṣaḥīḥ al-Bukhārī, ṭ. al-Sulṭāniyya,
 Canonical guides: [search_library reference](https://qurangallery.com/docs/mcp/search-library) · [Choosing a scope](https://qurangallery.com/docs/mcp/scopes) · [Reading a result](https://qurangallery.com/docs/mcp/reading-results) · [Grounding rules](https://qurangallery.com/docs/mcp/grounding-rules)
 
 ---
+
 Last reviewed: 2026-10-14
