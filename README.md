@@ -47,6 +47,8 @@ Then ask your assistant something the library can answer. Queries to the library
 
 - [Connect Claude, Claude Desktop and Claude Code](./docs/connect-claude.md)
 - [Connect ChatGPT (including deep research)](./docs/connect-chatgpt.md)
+- [Connect Cursor](./docs/connect-cursor.md)
+- [Connect VS Code](./docs/connect-vscode.md)
 
 The full documentation is also published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
 
