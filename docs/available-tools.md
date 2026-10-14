@@ -46,6 +46,8 @@ If a scope returns nothing, try its broader neighbour (`tafsir-canonical` to `ta
 
 Both come back as a tool result with `isError: true`, not as a protocol error, so the assistant can correct the call and retry.
 
+The raw `shamela_*` tools answer invalid arguments the same way: a tool result with `isError: true` whose text starts `BAD_ARG:`, names the argument and says what to send. For example, `shamela_get_page` with `book_id` 0 returns ``BAD_ARG: shamela_get_page was called with invalid arguments. `book_id` must be greater than 0. Expected a positive Shamela book id: get it from shamela_search_books or shamela_resolve …``, and `shamela_search_pages` with `scope` given as a string returns ``BAD_ARG: … `scope` must be an object such as {category_ids:[16]} or {madhab:'shafii'}, not a string.``
+
 ### What each passage carries
 
 `book`, `author`, `authorDied` (AH), `bookId`, `pageId`, `printedPage`, `arabic` (verbatim, up to 1,600 characters), `matchedIn`, `matchQuality`, `sourceUrl`, and `edition`, `editor` and `publisher` when the library records them.
@@ -64,12 +66,12 @@ Both come back as a tool result with `isError: true`, not as a protocol error, s
 
 | Tool | What it does | Key parameters | Try asking |
 | --- | --- | --- | --- |
-| `shamela_search_pages` | Raw page search over body (matn) and footnotes; AND-combines tokens. Runs unscoped by default and ranks by term frequency. | **`query`**, `scope`, `options` (incl. `search_in`), `exclude_*` filters, `limit` ≤100, `offset` | "Search the qira'at books for «الإمالة»." |
-| `shamela_search_phrase` | Consecutive-phrase or proximity search. | **`query`**, `mode` `phrase`\|`near`, `distance` 1–50 (default 5), `search_in`, `scope` | "Find pages where «الصلاة» and «الوسطى» appear within three words of each other." |
+| `shamela_search_pages` | Raw page search over body (matn) and footnotes; AND-combines tokens. Runs unscoped by default and ranks by term frequency. If nothing matches and the query has six words or fewer, it retries once by Arabic root and sets `morphology_fallback: true`: the results are other word forms from the same roots, a superset of what was asked. `relaxed_min_match` / `relaxed_of_terms` mean no page held every word, so the hit matched only that many of them. | **`query`**, `scope`, `options` (incl. `search_in`), `exclude_*` filters, `limit` ≤100, `offset` | "Search the qira'at books for «الإمالة»." |
+| `shamela_search_phrase` | Consecutive-phrase or proximity search. `phrase` mode is a true consecutive-phrase index query, so it also finds phrases made of common words. | **`query`**, `mode` `phrase`\|`near`, `distance` 1–50 (default 5), `search_in`, `scope` | "Find pages where «الصلاة» and «الوسطى» appear within three words of each other." |
 | `shamela_search_exact` | Search that honours diacritics, hamza/alef forms and digit systems. | **`query`**, **`preserve`**, `scope` | "Find this exact vocalised spelling, diacritics included." |
 | `shamela_search_boolean` | AND / OR / NOT in one query. | `all_of`, `any_of`, `none_of`, `search_in`, `scope` | "Pages with «الوضوء» and «النية» but not «الغسل»." |
 | `shamela_search_titles` | Search chapter and section headings. | **`query`**, `scope`, `options` | "Which books have a chapter titled «باب التيمم»?" |
-| `shamela_search_hadith` | Find a hadith by its wording across the hadith shelves, then resolve its cross-collection takhrij. | **`query`**, `max_pages_scanned` 1–50, `search_all_categories` | "Which collections narrate «إنما الأعمال بالنيات»?" |
+| `shamela_search_hadith` | Find a hadith by its wording across the hadith shelves, then resolve its cross-collection takhrij. A query of four or more words that finds nothing is retried once without one word; the response then carries `relaxed: { dropped_term, searched_query }` and the results are a near match, so say which word was dropped. | **`query`**, `max_pages_scanned` 1–50, `search_all_categories` | "Which collections narrate «إنما الأعمال بالنيات»?" |
 | `shamela_search_batch` | Several scoped searches in one call, merged and deduplicated; `scope` required on every probe. The description says up to 12 probes; the schema accepts 24. | **`probes`**, `max_total_passages` ≤200, `deadline_ms` ≤60000 | "Search Hanafi and Maliki fiqh for «المسح على الخفين» in one go." |
 | `shamela_recon` | Before a search: how many pages carry a word, and on which shelves. | **`root`**, `mode` `literal` (default) \| `morphological`, `scope` | "How common is «الاستحسان», and in which categories?" |
 | `shamela_root_stats` | How an Arabic root spreads across the library by category, century, book and author. | **`root`**, `mode` (default `morphological`), `scope` | "Show how the root «ك ت ب» is distributed by century." |
@@ -92,7 +94,7 @@ Both come back as a tool result with `isError: true`, not as a protocol error, s
 | `shamela_resolve_work` | Resolve a cited title (with optional author and edition) to one catalogue entry, or refuse. | **`title`**, `author`, `edition`, `limit` ≤50 | "Which entry is Sahih al-Bukhari, Sultaniyya printing?" |
 | `shamela_resolve_printed_page` | Turn a printed volume/page into the page ids that carry it. | **`book_id`**, **`page`**, `part` | "Open volume 1, page 6 of that printing." |
 | `shamela_get_citation` | Format a citation in one of five styles. | **`book_id`**, `page_id`, `text`, `style` `shamela` (default) \| `short` \| `full` \| `bibtex` \| `ris` | "Give me a BibTeX entry for this page." |
-| `shamela_resolve` | Rank book and author ids for an Arabic name fragment. Use `shamela_resolve_work` when verifying a citation. | **`query`**, `type` `any`\|`book`\|`author`, `limit` ≤20 | "Find the book id for «المغني»." |
+| `shamela_resolve` | Rank book and author ids for an Arabic name fragment. Use `shamela_resolve_work` when verifying a citation. When no book title holds the whole name asked for, the response carries `no_confident_match.note`: do not cite the nearest book as the one requested. | **`query`**, `type` `any`\|`book`\|`author`, `limit` ≤20 | "Find the book id for «المغني»." |
 
 ## Isnad and narrators
 
@@ -118,7 +120,7 @@ Both come back as a tool result with `isError: true`, not as a protocol error, s
 
 | Tool | What it does | Key parameters | Try asking |
 | --- | --- | --- | --- |
-| `shamela_search_books` | Find books by name, author, bibliography or editorial description. | **`query`**, `scope`, `options` | "Which printings of «سنن أبي داود» does the library hold?" |
+| `shamela_search_books` | Find books by name, author, bibliography or editorial description. `no_title_match: true` means results came back but no title (with its author's name) carries every word asked for, as with «ديوان الشافعي»; a book the library lacks should be reported as not held here. | **`query`**, `scope`, `options` | "Which printings of «سنن أبي داود» does the library hold?" |
 | `shamela_search_authors` | Find authors by name or biography. | **`query`**, `options` | "Find authors named «ابن قدامة»." |
 | `shamela_get_book` | Full metadata for one book; 1,368 of the 8,594 have a cover image. | **`book_id`**, `include_cover` | "Show the catalogue record and cover for book 1681." |
 | `shamela_get_author` | Metadata for one author, optionally with their books. | **`author_id`**, `include_books` | "List this author's books in the library." |
