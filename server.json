@@ -1,8 +1,8 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "com.qurangallery/shamela",
-  "title": "Quran Gallery: Classical Islamic Library",
-  "description": "Search 8,594 classical Islamic books; verbatim Arabic cited by edition, volume and page. No key.",
+  "name": "com.qurangallery/mcp",
+  "title": "Quran Gallery MCP",
+  "description": "Classical Islamic library (Shamela, 8,594 books): verbatim Arabic cited by volume and page. No key.",
   "websiteUrl": "https://qurangallery.com/mcp",
   "version": "0.2.0",
   "remotes": [

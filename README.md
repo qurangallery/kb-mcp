@@ -1,9 +1,11 @@
-# Quran Gallery Shamela MCP server
+# Quran Gallery MCP server: the classical Islamic library (Shamela)
 
 > A hosted, no-account MCP server over 8,594 classical Islamic works that returns the printed volume and page, the edition, and the verbatim Arabic of every passage it finds.
 > Endpoint: `https://qurangallery.com/mcp/shamela` (Streamable HTTP). Free, no API key, nothing to install. Run by [Quran Gallery](https://qurangallery.com/mcp) at qurangallery.com.
+>
+> خادم MCP مستضاف من Quran Gallery فوق المكتبة الشاملة: 8,594 كتابًا من كتب التراث، يُرجع المجلد والصفحة المطبوعة والنص العربي حرفيًّا، بلا حساب ولا مفتاح.
 
-Quran Gallery's Shamela MCP is an Islamic MCP server for hadith, tafsir, fiqh, aqeedah and the Arabic language sciences, built over a copy of Maktabah al-Shamela (المكتبة الشاملة): 8,594 works by 3,188 authors in 41 categories. It is operated by Quran Gallery, not by shamela.ws, and it is a different server from `mcp.quran.ai` (the Quran Foundation's Quran server), with a different operator, endpoint and corpus.
+Quran Gallery MCP is an Islamic MCP server for hadith, tafsir, fiqh, aqeedah and the Arabic language sciences. Its Shamela MCP endpoint serves a copy of Maktabah al-Shamela (المكتبة الشاملة): 8,594 works by 3,188 authors in 41 categories. It is operated by Quran Gallery, not by shamela.ws, and it is a different server from `mcp.quran.ai` (the Quran Foundation's Quran server), with a different operator, endpoint and corpus.
 
 This repository is the documentation. Hosted service, source not published; docs CC BY 4.0.
 
@@ -172,7 +174,7 @@ Figures that change when the server or the library changes. Each row was checked
 
 ## Registry manifest
 
-[`server.json`](./server.json) describes the remote server in the MCP Registry format (schema 2025-12-11) under the name `com.qurangallery/shamela`, with the optional `Authorization` header declared as not required.
+[`server.json`](./server.json) describes the remote server in the MCP Registry format (schema 2025-12-11) under the name `com.qurangallery/mcp`, with the optional `Authorization` header declared as not required.
 
 ## Contributing and citing
 

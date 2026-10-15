@@ -1,6 +1,6 @@
 # Contributing
 
-This repository holds the documentation for the Quran Gallery Shamela MCP server at `https://qurangallery.com/mcp/shamela`. It contains no server code and no library text. The server is hosted by Quran Gallery and its source is not published, so issues and pull requests here can only change the documentation.
+This repository holds the documentation for the Quran Gallery MCP server (its Shamela library) at `https://qurangallery.com/mcp/shamela`. It contains no server code and no library text. The server is hosted by Quran Gallery and its source is not published, so issues and pull requests here can only change the documentation.
 
 ## Reporting an error
 
