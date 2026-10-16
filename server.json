@@ -4,7 +4,7 @@
   "title": "Quran Gallery MCP",
   "description": "Classical Islamic library (Shamela, 8,594 books): verbatim Arabic cited by volume and page. No key.",
   "websiteUrl": "https://qurangallery.com/mcp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "remotes": [
     {
       "type": "streamable-http",

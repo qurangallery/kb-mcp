@@ -34,7 +34,7 @@ Open **Settings → Plugins** (`chatgpt.com/settings/plugins-settings`) and clic
 
 ## Deep research: `search` and `fetch`
 
-ChatGPT deep research and company knowledge need two read-only tools named `search` and `fetch`. This server provides both.
+ChatGPT deep research and company knowledge need two read-only tools named `search` and `fetch`. This server provides both. Every client, ChatGPT included, sees the same 14 tools, `search` and `fetch` among them.
 
 ```text
 search { "query": "إنما الأعمال بالنيات" }
@@ -48,7 +48,7 @@ fetch { "id": "9823:66" }
   → { id, title, text, url, metadata }
 ```
 
-`metadata` carries `bookId`, `pageId`, `book`, `author`, `authorDied`, `printedPage`, `edition`, `editor`, `publisher`, `hasFootnotes` and `complete`. A title ending in `[footnote match]` matched only an editor's footnote; `[token match]` means the exact phrase was not found and the words occur separately. `search` is unscoped and ranks by term frequency, so in the live result above (2026-10-14) a commentary on al-Bukhari ranks first, not the Sahih itself. For a scoped search use `search_library`; see [Search and citations](./search-and-citations.md).
+`metadata` carries `bookId`, `pageId`, `book`, `author`, `authorDied`, `printedPage`, `edition`, `editor`, `publisher`, `hasFootnotes` and `complete`. A title ending in `[footnote match]` matched only an editor's footnote; `[token match]` means the exact phrase was not found and the words occur separately. `search` is unscoped and ranks by term frequency, so in the live result above (2026-10-14) a commentary on al-Bukhari ranks first, not the Sahih itself. For a scoped search use `shamela_search_library`; see [Search and citations](./search-and-citations.md).
 
 ## First prompt
 
@@ -87,4 +87,4 @@ Canonical guide: [Connect ChatGPT to the Islamic library](https://qurangallery.c
 
 ---
 
-Last reviewed: 2026-10-14
+Last reviewed: 2026-10-15

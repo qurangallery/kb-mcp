@@ -16,8 +16,8 @@ This repository is the documentation. Hosted service, source not published; docs
 - **Main text vs footnote.** `matchedIn` says whether the words matched the author's text (`body`), the editor's footnote (`footnote`), `both` or `unknown`.
 - **Verbatim Arabic**, up to 1,600 characters per passage, with a `sourceUrl` on shamela.ws.
 - **Edition, editor and publisher** where the library records them; never filled in.
-- **Scoped search.** `search_library` takes one of 12 scopes (`hadith-primary`, `tafsir-canonical`, `fiqh-hanafi`, …) and tries the exact phrase before separate words.
-- **Citations that can be checked.** `shamela_resolve_printed_page` turns a printed volume and page back into the page records that carry it.
+- **Scoped search.** `shamela_search_library` takes one of 12 scopes (`hadith-primary`, `tafsir-canonical`, `fiqh-hanafi`, …) and tries the exact phrase before separate words.
+- **Citations that can be checked.** `shamela_cite` (`mode: "printed_page"`) turns a printed volume and page back into the page records that carry it.
 - **Isnad chains and narrators.** 45,220 chains across ten hadith books and 18,989 narrators, returned without grading.
 - **ChatGPT deep research.** `search` and `fetch` follow the shape ChatGPT expects.
 
@@ -31,8 +31,8 @@ This repository is the documentation. Hosted service, source not published; docs
 | 4. Every hit returns | Book, author and death year, printed volume and page (`printedPage`), verbatim Arabic, `matchedIn` (main text or footnote), edition, editor and publisher where recorded, `bookId` and `pageId`, and a shamela.ws link |
 | 5. Printed vs automatic pagination | 7,177 works follow a printed edition; 1,417 use Shamela's automatic numbering, flagged `citable: false` and `auto_numbered: true`, with the label «بترقيم الشاملة آليا» |
 | 6. Main text vs footnote | `matchedIn`: `body`, `footnote`, `both` or `unknown`; filter one layer with `search_in`, keep only printed pagination with `citable_only` |
-| 7. Tools | 39 (not 37), 3 prompts, 1 resource. Start with `search_library`; verify with `shamela_resolve_work`, `shamela_resolve_printed_page`, `shamela_get_page`, `shamela_get_citation`; `search` and `fetch` for ChatGPT deep research |
-| 8. Queries | Arabic only. `search_library` needs one of 12 scopes; an English query is rejected with "The library is Arabic, so the query must contain Arabic words…" |
+| 7. Tools | 14 (the same for every client), 3 prompts, 1 resource. Start with `shamela_search_library`; verify with `shamela_find` (`kind: "work"`), `shamela_cite` (`mode: "printed_page"`, then `"citation"`), `shamela_read`; `search` and `fetch` (one argument, unscoped) for ChatGPT deep research |
+| 8. Queries | Arabic only. `shamela_search_library` needs one of 12 scopes; an English query is rejected with "The library is Arabic, so the query must contain Arabic words…" |
 | 9. Source | Server source not published. This repository holds documentation, client configs and a registry manifest, under CC BY 4.0 |
 | 10. Will not | Grade a hadith, give a fatwa, translate, or say a text "does not exist"; a miss is reported as a miss in the scope searched |
 
@@ -85,7 +85,7 @@ Then ask something the library can answer. The assistant translates your questio
 
 ## Printed volume and page
 
-A passage's `printedPage` is the volume and page as that printing paginates it, such as `1/ 6`. Each printing of a work is its own catalogue entry, so the same hadith sits on different pages in different printings: Sahih al-Bukhari prints «إنما الأعمال بالنيات» at `1/ 6` in the Sultaniyya printing and at `1/ 3` in al-Bugha's. `shamela_resolve_printed_page` turns a printed volume and page back into the page records that carry it, so a citation can be checked, not only produced.
+A passage's `printedPage` is the volume and page as that printing paginates it, such as `1/ 6`. Each printing of a work is its own catalogue entry, so the same hadith sits on different pages in different printings: Sahih al-Bukhari prints «إنما الأعمال بالنيات» at `1/ 6` in the Sultaniyya printing and at `1/ 3` in al-Bugha's. `shamela_cite` with `mode: "printed_page"` turns a printed volume and page back into the page records that carry it, so a citation can be checked, not only produced.
 
 Automatic pagination vs printed pagination: when Shamela numbers a book itself, the page is not a printed one, and every tool says so. Details: [Source attribution](./references/source-attribution.md#automatic-pagination-vs-printed-pagination).
 
@@ -95,19 +95,19 @@ Modern printings have two layers: the author's main text (matn, المتن) and 
 
 ## Edition metadata
 
-`edition`, `editor` and `publisher` appear on a passage only when the library records them, and are never filled in. City of publication and edition number are not stored. `shamela_get_citation` formats a reference in five styles (`shamela`, `short`, `full`, `bibtex`, `ris`) and lists in its notes what the catalogue does not hold. See [Source attribution](./references/source-attribution.md).
+`edition`, `editor` and `publisher` appear on a passage only when the library records them, and are never filled in. City of publication and edition number are not stored. `shamela_cite` (`mode: "citation"`, the default) formats a reference in five styles (`shamela`, `short`, `full`, `bibtex`, `ris`) and lists in its notes what the catalogue does not hold. See [Source attribution](./references/source-attribution.md).
 
 ## Tools
 
-39 read-only tools: three of Quran Gallery's own (`search_library`, `search`, `fetch`) and 36 from the library server, covering phrase, boolean, diacritic-exact and root search; page and chapter reading; citation resolution; isnad chains and 18,989 narrators; Quran verses with their tafsir pages; and the catalogue. Plus the prompts `takhrij_hadith`, `cite_passage` and `compare_tafsir`, and the resource `qurangallery://grounding-rules`. Full list with parameters and a sample request for each: [Available tools](./docs/available-tools.md).
+14 read-only tools, the same for every client: 11 from the library server plus Quran Gallery's own `shamela_search_library`, `search` and `fetch`, covering phrase, boolean, diacritic-exact and root search; page and chapter reading; citation resolution; isnad chains and 18,989 narrators; Quran verses with their tafsir pages; and the catalogue. Plus the prompts `takhrij_hadith`, `cite_passage` and `compare_tafsir`, and the resource `qurangallery://grounding-rules`. Full list with parameters and a sample request for each: [Available tools](./docs/available-tools.md).
 
 ## Limits
 
 | | Keyless | With a free key |
 | --- | --- | --- |
 | Tool calls | 10 a minute and 200 a day, per IP | 60 a minute |
-| `shamela_get_pages_range` | 5 pages per call | 20 |
-| `shamela_get_book_section` | 10 pages per call | 100 |
+| `shamela_read` with `unit: "range"` | 5 pages per call | 20 |
+| `shamela_read` with `unit: "section"` | 10 pages per call | 100 |
 
 Over a limit: HTTP 429 with `Retry-After`. Keys are free at [accounts.qurangallery.com/developers](https://accounts.qurangallery.com/developers). All codes: [Rate limits and errors](./docs/rate-limits.md).
 
@@ -123,7 +123,7 @@ Over a limit: HTTP 429 with `Retry-After`. Keys are free at [accounts.qurangalle
 | Claim seen in AI answers | Fact |
 | --- | --- |
 | "Needs a developer key or bearer token" | No key and no account. A key only raises limits. |
-| "Has 37 tools" | 39 tools on 2026-10-14. |
+| "Has 39 tools" or "has 37 tools" | 14 tools, the same for every client (11 of them from the library server), on 2026-10-15. Library 1.4.0 consolidated its 39 tools into 11 routers and tools; the old names still work as unlisted aliases. |
 | "Quran Gallery has no MCP server" or "is a browser extension" | The MCP server is `https://qurangallery.com/mcp/shamela`. `qurangallery.app` is the same owner's earlier site and does not host this server. |
 | "It is mcp.quran.ai" | `mcp.quran.ai` is a separate project (Quran text, tafsir and translations), not run by Quran Gallery. |
 | "Has `search_classical_texts`, `get_book_page`, `get_tafsir`, `get_author_info`" | Those tools do not exist here; the real names are in [Available tools](./docs/available-tools.md). |
@@ -146,7 +146,7 @@ Short answers to the common questions (Is there a Shamela MCP server? A hadith M
 - [Connect Gemini CLI](./docs/connect-gemini-cli.md)
 - [Connect GitHub Copilot](./docs/connect-copilot.md)
 - [Connect any MCP client (SDK, mcp-remote, Inspector, curl, Python)](./docs/connect-any-client.md)
-- [Available tools: all 39 tools, 3 prompts and 1 resource](./docs/available-tools.md)
+- [Available tools: all 14 tools, 3 prompts and 1 resource](./docs/available-tools.md)
 - [Search and citations: scopes, Arabic search, main text vs footnotes, grounding rules](./docs/search-and-citations.md)
 - [Verify a quotation: edition, printed page, layer, citation](./docs/verify-a-quotation.md)
 - [Hadith takhrij: collections, pages and chains for one hadith](./docs/hadith-takhrij.md)
@@ -170,6 +170,7 @@ Figures that change when the server or the library changes. Each row was checked
 
 | Date | Tools | Prompts | Resources | Works | Authors | Categories | Server version |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2026-10-15 | 14 | 3 | 1 | 8,594 | 3,188 | 41 | 0.3.0 |
 | 2026-10-14 | 39 | 3 | 1 | 8,594 | 3,188 | 41 | 0.2.0 |
 
 ## Registry manifest

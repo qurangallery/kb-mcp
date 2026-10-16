@@ -103,7 +103,7 @@ The value is written without a space after the colon because some clients do not
 
 ## Check the connection
 
-Your client should list 39 tools, starting with `search_library`. To check without a client:
+Your client should list 14 tools, starting with `shamela_search_library`. To check without a client:
 
 ```bash
 curl -s https://qurangallery.com/mcp/shamela \
@@ -113,7 +113,7 @@ curl -s https://qurangallery.com/mcp/shamela \
   | python3 -c 'import json,sys; t=json.load(sys.stdin)["result"]["tools"]; print(len(t), t[0]["name"])'
 ```
 
-Expected output on 2026-10-14: `39 search_library`. Listing tools does not use up the keyless tool-call allowance.
+Expected output on 2026-10-15 (server 0.3.0): `12 shamela_search_library`. Listing tools does not use up the keyless tool-call allowance.
 
 ## First prompt
 
@@ -122,7 +122,7 @@ Find the hadith «إنما الأعمال بالنيات» in the primary collec
 which book, edition, volume and page it is printed on. Quote the Arabic exactly.
 ```
 
-The assistant should call `search_library` with `scope: "hadith-primary"`. The answer should name صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya printing), printed page `1/ 6`, main text, with the link `https://shamela.ws/book/1681/10`. If it answers from memory instead, reply: "Use the Quran Gallery library tool and quote what it returns."
+The assistant should call `shamela_search_library` with `scope: "hadith-primary"`. The answer should name صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya printing), printed page `1/ 6`, main text, with the link `https://shamela.ws/book/1681/10`. If it answers from memory instead, reply: "Use the Quran Gallery library tool and quote what it returns."
 
 Library queries must contain Arabic words. Ask in any language; the assistant translates the search terms.
 
@@ -149,7 +149,7 @@ Never send a placeholder. Any bearer token is checked, so `Bearer qg_sk_your_key
 
 - Only Streamable HTTP. Clients limited to SSE need `mcp-remote` or a newer version.
 - ChatGPT cannot send a key, so it always uses the keyless limits.
-- Some clients cap the total number of tools they load across all servers; this server has 39.
+- Some clients cap the total number of tools they load across all servers; this server lists 14.
 - Results are only as good as the question's Arabic search terms. See [Search and citations](./search-and-citations.md).
 
 ## Related
@@ -162,4 +162,4 @@ Canonical guide: [Getting started with the Quran Gallery MCP server](https://qur
 
 ---
 
-Last reviewed: 2026-10-14
+Last reviewed: 2026-10-15

@@ -11,13 +11,13 @@ A key is never required. Without one you are on the keyless tier.
 | --- | --- | --- |
 | Tool calls | 10 a minute and 200 a day, per IP address | 60 a minute, per key; no daily cap |
 | Connecting and listing tools | Not counted; flood ceiling of 60 a minute per IP | Counted in the 60 |
-| `shamela_get_pages_range` | Up to 5 pages per call | Up to 20 |
-| `shamela_get_book_section` | Up to 10 pages per call | Up to 100 |
+| `shamela_read` with `unit: "range"` | Up to 5 pages per call | Up to 20 |
+| `shamela_read` with `unit: "section"` | Up to 10 pages per call | Up to 100 |
 
 - All windows are sliding. A refused call spends nothing: hitting the per-minute limit does not use up the daily one.
 - Keyless callers also share one pool of capacity, so at a busy moment a keyless call can be refused before your own limit; the message says so.
 - A shortened page range is not a lost page: the response says where to continue.
-- One `search_library` call is one tool call, even though it may run two search passes.
+- One `shamela_search_library` call is one tool call, even though it may run two search passes.
 
 Every response carries the current state:
 

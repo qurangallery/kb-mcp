@@ -12,7 +12,7 @@ The steps are the same in the browser and in the desktop app.
 | 1    | Open **Settings → Connectors** (some versions: **Customize → Connectors**). Click **+ Add**, then **Add custom connector**.                                                |
 | 2    | Name: `Quran Gallery`. URL: `https://qurangallery.com/mcp/shamela`. Click **Continue**.                                                                                    |
 | 3    | Claude detects the server and selects **No sign-in** (marked _Detected_). Keep it. Leave **Request headers** empty unless you have a key. Click **Add**, then **Connect**. |
-| 4    | The connector page lists 39 read-only tools, set to **Needs approval**. Keep that, or set read-only tools to **Always allow**.                                             |
+| 4    | The connector page lists 14 read-only tools, set to **Needs approval**. Keep that, or set read-only tools to **Always allow**.                                             |
 | 5    | In a chat, click **+** → **Connectors** and switch **Quran Gallery** on.                                                                                                   |
 | 6    | On the first tool call, click **Allow once** or **Always allow**.                                                                                                          |
 
@@ -50,7 +50,7 @@ Find the hadith «إنما الأعمال بالنيات» in the primary collec
 which book, edition, volume and page it is printed on. Quote the Arabic exactly.
 ```
 
-Expected: a call to `search_library` (or `search` then `fetch`), with a hit in صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya edition) at printed page `1/ 6`, linked to `https://shamela.ws/book/1681/10`. If the answer comes from memory instead, reply: "Use the Quran Gallery library tool and quote what it returns."
+Expected: a call to `shamela_search_library` (or `search` then `fetch`), with a hit in صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya edition) at printed page `1/ 6`, linked to `https://shamela.ws/book/1681/10`. If the answer comes from memory instead, reply: "Use the Quran Gallery library tool and quote what it returns."
 
 ## Optional: a free key
 
@@ -99,4 +99,4 @@ Canonical guides: [Claude and Claude Desktop](https://qurangallery.com/docs/mcp/
 
 ---
 
-Last reviewed: 2026-10-14
+Last reviewed: 2026-10-15

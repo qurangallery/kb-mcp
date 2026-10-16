@@ -7,7 +7,7 @@ This page is the field-by-field reference for attributing a passage from Quran G
 
 ## Fields on a search hit
 
-A passage from `search_library` (and the record behind `fetch`):
+A passage from `shamela_search_library` (and the record behind `fetch`):
 
 ```json
 {
@@ -53,7 +53,7 @@ The result as a whole also carries `relaxedToTokens` (`true` when the exact phra
 | `pageId` | `10` | Shamela's internal record id | No |
 | `bookId` | `1681` | Shamela's id for this printing | No; name the book and printing |
 
-There is no arithmetic between a printed page and a `pageId`. One printed page is often split across several records: page `1/ 6` of book 1681 is records 9, 10 and 11. `shamela_resolve_printed_page` maps a printed reference to all of them, and its notes say to read every record, because quoting the first alone presents part of a page as the whole.
+There is no arithmetic between a printed page and a `pageId`. One printed page is often split across several records: page `1/ 6` of book 1681 is records 9, 10 and 11. `shamela_cite` with `mode: "printed_page"` maps a printed reference to all of them, and its notes say to read every record, because quoting the first alone presents part of a page as the whole.
 
 ## Main text or footnote
 
@@ -79,18 +79,18 @@ Each printing of a work is its own catalogue entry with its own `bookId`. The li
 | 6910 | المغني لابن قدامة - ت التركي | ت التركي | التركي | not recorded |
 | 9823 | شرح البخاري للسفيري = المجالس الوعظية في شرح أحاديث خير البرية | none | none | none |
 
-- In `search_library` and `fetch` passages, an unrecorded field is left out. `shamela_get_book` returns it as `null`.
+- In `shamela_search_library` and `fetch` passages, an unrecorded field is left out. `shamela_get_details` returns it as `null`.
 - Nothing is filled in from general knowledge.
 - The library never stores the city of publication or the edition number (first printing, second printing).
-- To pick a printing on purpose, use `shamela_resolve_work` with `title` and `edition`. When the named printing is absent it returns `status: "not_found"`, `reason: "edition_not_found"` and the `available_editions` that do exist.
+- To pick a printing on purpose, use `shamela_find` with `kind: "work"`, `title` and `edition`. When the named printing is absent it returns `status: "not_found"`, `reason: "edition_not_found"` and the `available_editions` that do exist.
 
 ### Covers
 
-1,745 books have a scanned printing; 1,368 of them ship a cover image and 377 do not. `shamela_get_book` attaches the cover (a small title-page thumbnail) when there is one, and its notes point out that the cover often prints the editor the metadata lacks. If you take the editor from the image, attribute it to the cover, not to the metadata.
+1,745 books have a scanned printing; 1,368 of them ship a cover image and 377 do not. `shamela_get_details` attaches the cover (a small title-page thumbnail) when there is one, and its notes point out that the cover often prints the editor the metadata lacks. If you take the editor from the image, attribute it to the cover, not to the metadata.
 
-## Ready-made citations: shamela_get_citation
+## Ready-made citations: shamela_cite
 
-`shamela_get_citation` formats a reference in five styles: `shamela` (the default), `short`, `full`, `bibtex` and `ris`. Every reply also carries `components` (the parts it used) and a `notes` list naming what is missing.
+`shamela_cite` formats a reference in five styles: `shamela` (the default), `short`, `full`, `bibtex` and `ris`. Every reply also carries `components` (the parts it used) and a `notes` list naming what is missing.
 
 | Style | Live output |
 | --- | --- |
@@ -110,7 +110,7 @@ city of publication not available in master.db
 
 Keep the notes with the citation. They say which parts to leave out or take from the book's title page.
 
-The year after the title in `full` style is Shamela's «تاريخ الكتاب» (book date). The `shamela_get_book` description warns that on 98.5% of dated books this is the main author's death year, not a composition year, so do not cite it as the year the book was written.
+The year after the title in `full` style is Shamela's «تاريخ الكتاب» (book date). The `shamela_get_details` description warns that on 98.5% of dated books this is the main author's death year, not a composition year, so do not cite it as the year the book was written.
 
 ## Automatic pagination vs printed pagination
 
@@ -118,8 +118,8 @@ The year after the title in `full` style is Shamela's «تاريخ الكتاب�
 
 | Where | Printed pagination | Automatic pagination |
 | --- | --- | --- |
-| `shamela_resolve_work`, `shamela_resolve_printed_page` | `citable: true` | `citable: false` |
-| `shamela_get_citation` | `auto_numbered: false` | `auto_numbered: true`, and the text ends «بترقيم الشاملة آليا» |
+| `shamela_find` (`kind: "work"`), `shamela_cite` (`mode: "printed_page"`) | `citable: true` | `citable: false` |
+| `shamela_cite` (`mode: "citation"`) | `auto_numbered: false` | `auto_numbered: true`, and the text ends «بترقيم الشاملة آليا» |
 | Search tools with `citable_only` | Kept | Filtered out |
 
 Live example, book 1376 (another entry of Sahih al-Bukhari, the Ata'at al-Ilm printing), `full` style:
@@ -132,7 +132,7 @@ Such a page number cannot be checked against any printed copy. Cite it only with
 
 ## Several entries, one source
 
-`shamela_get_book` lists other entries of the same work in `same_group`. For book 1681 it lists seven: four other printings of Sahih al-Bukhari and three abridgments. Hits in two entries of one group are the same text twice, not two independent sources. When search hits land in several entries of one work, `shamela_search_pages` adds `edition_groups` so they can be read as one source.
+`shamela_get_details` lists other entries of the same work in `same_group`. For book 1681 it lists seven: four other printings of Sahih al-Bukhari and three abridgments. Hits in two entries of one group are the same text twice, not two independent sources. When search hits land in several entries of one work, `shamela_search` adds `edition_groups` so they can be read as one source.
 
 ## A complete attribution
 

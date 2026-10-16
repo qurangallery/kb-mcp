@@ -9,13 +9,13 @@ A phantom citation is a reference that looks right (a real book, a plausible vol
 
 | Step | Tool | It answers | Abstain when |
 | --- | --- | --- | --- |
-| 1. Resolve the edition | `shamela_resolve_work` (title, optional `author`, `edition`) | Which catalogue entry, and so which printing, the claim refers to | `status: "not_found"`, or `citable: false` (automatic numbering, no printed page to check) |
-| 2. Resolve the printed page | `shamela_resolve_printed_page` (`book_id`, `page`, `part`) | Which page records carry that printed volume and page | No page ids come back |
-| 3. Read the page | `shamela_get_page` for each page id | The full text, with main text (`body`) and footnotes (`foot`) apart | The words are not on the page, or only in the footnotes when the claim is about the author |
+| 1. Resolve the edition | `shamela_find` with `kind: "work"` (title, optional `author`, `edition`) | Which catalogue entry, and so which printing, the claim refers to | `status: "not_found"`, or `citable: false` (automatic numbering, no printed page to check) |
+| 2. Resolve the printed page | `shamela_cite` with `mode: "printed_page"` (`book_id`, `page`, `part`) | Which page records carry that printed volume and page | No page ids come back |
+| 3. Read the page | `shamela_read` (`unit: "page"`) for each page id | The full text, with main text (`body`) and footnotes (`foot`) apart | The words are not on the page, or only in the footnotes when the claim is about the author |
 | 4. Quote verbatim | Copy from the tool result | The exact Arabic as printed | Never repair, re-point or complete the Arabic |
-| 5. Format the reference | `shamela_get_citation` | A citation built from recorded data, with `notes` naming what is not recorded | Do not fill missing editor, publisher, city or edition number |
+| 5. Format the reference | `shamela_cite` (`mode: "citation"`) | A citation built from recorded data, with `notes` naming what is not recorded | Do not fill missing editor, publisher, city or edition number |
 
-When the user has wording but no reference, a scoped `search_library` call does steps 1 to 3 in one move: each passage carries `printedPage`, `matchedIn` and the printing. Check `relaxedToTokens`: if it is `true`, the exact phrase was not found and the hit is not a quotation of it.
+When the user has wording but no reference, a scoped `shamela_search_library` call does steps 1 to 3 in one move: each passage carries `printedPage`, `matchedIn` and the printing. Check `relaxedToTokens`: if it is `true`, the exact phrase was not found and the hit is not a quotation of it.
 
 Worked through with live results: [Verify a quotation](./verify-a-quotation.md).
 
@@ -74,7 +74,7 @@ The live example: «إنما الأعمال بالنيات» is in the main text
 - The tools guarantee that a page is real and that the words are on it. They cannot stop an assistant from drawing a wrong conclusion from a real page.
 - A client may ignore server instructions and resources; only a system prompt or your own code can enforce the rules.
 - 1,417 works carry only automatic page numbers; a claim citing a printed page in one of them cannot be verified here.
-- `search_library` results carry no hadith number. Cite the printed volume and page instead.
+- `shamela_search_library` results carry no hadith number. Cite the printed volume and page instead.
 
 ## Related
 

@@ -16,7 +16,7 @@ Makteb is included because it is often asked about; its page describes its own c
 | Account | None; optional free key | Free account; you sign in and approve the connection | None (local) | None stated |
 | Open source | No; source not published | Not stated | Yes, MIT | Not stated |
 | Corpus (own claim) | 8,594 works, 3,188 authors, 41 categories | 8,598 books, 3,190 authors, 41 categories | Whatever you have installed | 48,000+ books, Sunni and Shia (own catalogue) |
-| Tools | 39 | 34 | 34 (v1.3.0) | 5 |
+| Tools | 14 | 34 | 34 (v1.3.0) | 5 |
 | Clients | Any MCP client with remote-server support | Claude, ChatGPT, Hermes Agent (per its guide) | Claude app; README lists Windows 10 and 11, macOS "possible but not yet tested" | Antigravity, VS Code, Cursor, Codex and Claude, per its page |
 
 Sources: Shamela Link [home page](https://shamela.link/en) (counts) and [guide](https://shamela.link/en/guide); [alhoqbani/shamela-mcp README](https://github.com/alhoqbani/shamela-mcp); [Makteb MCP page](https://makteb.org/mcp). The alhoqbani README itself notes that Shamela can now be reached remotely through shamela.link. alhoqbani/shamela-mcp had 103 GitHub stars.
@@ -80,4 +80,4 @@ Canonical guide: [Quran Gallery MCP overview](https://qurangallery.com/docs/mcp/
 
 ---
 
-Last reviewed: 2026-10-14
+Last reviewed: 2026-10-15

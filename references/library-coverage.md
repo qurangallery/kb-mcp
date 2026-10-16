@@ -3,7 +3,7 @@
 > 8,594 works by 3,188 authors in 41 categories from Maktabah al-Shamela (المكتبة الشاملة), plus 6,236 Quran verses, 18,989 narrators and 45,220 indexed isnad chains.
 > 7,177 works are paginated as a printed edition; 1,417 carry Shamela's own page numbers. Twelve search scopes cover 7,084 works; the raw tools reach all of them.
 
-Figures are from the live server on 2026-10-14 (`shamela_list_categories`: `downloaded_total: 8594`, and every category's `downloaded_count` equals its `book_count`, so the full text of every catalogue entry is on the server).
+Figures are from the live server on 2026-10-14 (`shamela_find` with `kind: "category"`: `downloaded_total: 8594`, and every category's `downloaded_count` equals its `book_count`, so the full text of every catalogue entry is on the server).
 
 ## At a glance
 
@@ -21,7 +21,7 @@ Figures are from the live server on 2026-10-14 (`shamela_list_categories`: `down
 
 ## Categories
 
-Live from `shamela_list_categories {"include_counts": true}`. The `Scope` column names the `search_library` scopes that include the category.
+Live from `shamela_find {"kind": "category", "include_counts": true}`. The `Scope` column names the `shamela_search_library` scopes that include the category.
 
 | id | Category | Books | Scope |
 | --- | --- | --- | --- |
@@ -105,10 +105,10 @@ Each printing of a work is its own entry with its own `book_id`; the edition is 
 | 6910 | المغني لابن قدامة - ت التركي | ت التركي | التركي | not recorded |
 | 9823 | شرح البخاري للسفيري = المجالس الوعظية… | none | none | none |
 
-- In `search_library` and `fetch` passages, an unrecorded field is omitted; `shamela_get_book` returns it as `null`. Nothing is filled in from general knowledge.
-- City of publication and edition number (first printing, second printing) are never stored. `shamela_get_citation` lists what is missing in `notes`.
-- `shamela_get_book` lists other entries of the same work in `same_group` (seven for book 1681: four other printings of Sahih al-Bukhari and three abridgments). Hits in two entries of one group are one witness, not two; `shamela_search_pages` marks them with `edition_groups`.
-- For scanned books, `shamela_get_book` returns a `scan` manifest and often a cover image (`include_cover`). An editor read from the cover is attributed to the cover, not to the metadata.
+- In `shamela_search_library` and `fetch` passages, an unrecorded field is omitted; `shamela_get_details` returns it as `null`. Nothing is filled in from general knowledge.
+- City of publication and edition number (first printing, second printing) are never stored. `shamela_cite` lists what is missing in `notes`.
+- `shamela_get_details` (`kind: "book"`) lists other entries of the same work in `same_group` (seven for book 1681: four other printings of Sahih al-Bukhari and three abridgments). Hits in two entries of one group are one witness, not two; `shamela_search` marks them with `edition_groups`.
+- For scanned books, `shamela_get_details` (`kind: "book"`) returns a `scan` manifest and often a cover image (`include_cover`). An editor read from the cover is attributed to the cover, not to the metadata.
 
 ## Limitations
 

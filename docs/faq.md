@@ -1,7 +1,7 @@
 # Quran Gallery MCP server FAQ: Shamela, hadith, tafsir and fiqh over MCP
 
 > Quran Gallery runs a free, hosted MCP server for the Maktabah al-Shamela library at `https://qurangallery.com/mcp/shamela`.
-> No account, no key, no install: 39 read-only tools over 8,594 classical Islamic works, each hit cited by edition, volume and printed page.
+> No account, no key, no install: 14 read-only tools over 8,594 classical Islamic works, each hit cited by edition, volume and printed page.
 
 ## Is there an MCP server for Maktabah al-Shamela?
 
@@ -9,11 +9,11 @@ Yes. Quran Gallery hosts one at `https://qurangallery.com/mcp/shamela` (Streamab
 
 ## Is there a hadith MCP server with printed-page citations?
 
-Yes. `search_library` with `scope: "hadith-primary"` searches the eight primary collections, each pinned to one printing, and returns the volume and page as that printing paginates them. `shamela_search_hadith`, `shamela_get_isnad` and the `takhrij_hadith` prompt trace a hadith across collections with its chains. See [Hadith takhrij](./hadith-takhrij.md).
+Yes. `shamela_search_library` with `scope: "hadith-primary"` searches the eight primary collections, each pinned to one printing, and returns the volume and page as that printing paginates them. `shamela_lookup_hadith`, `shamela_lookup_rijal` (`mode: "isnad"`) and the `takhrij_hadith` prompt trace a hadith across collections with its chains. See [Hadith takhrij](./hadith-takhrij.md).
 
 ## Can I use it for tafsir?
 
-Yes. The `tafsir-canonical` scope searches Ibn Kathir, al-Tabari, Ibn al-Jawzi and three more, in that order; `tafsir` covers the whole shelf (586 works). `shamela_get_tafseer_texts` returns the commentary on one verse from several tafsirs in one call, and the `compare_tafsir` prompt compares them, each view quoted and attributed.
+Yes. The `tafsir-canonical` scope searches Ibn Kathir, al-Tabari, Ibn al-Jawzi and three more, in that order; `tafsir` covers the whole shelf (586 works). `shamela_lookup_tafsir` with `mode: "texts"` returns the commentary on one verse from several tafsirs in one call, and the `compare_tafsir` prompt compares them, each view quoted and attributed.
 
 ## Can I use it for fiqh?
 
@@ -29,7 +29,7 @@ Yes.
 
 ## How many tools does it have?
 
-39, not the 37 some descriptions give. All are read-only: `search_library`, `search` and `fetch`, plus 36 `shamela_*` library tools. Also 3 prompts (`takhrij_hadith`, `cite_passage`, `compare_tafsir`) and 1 resource (`qurangallery://grounding-rules`). See [Available tools](./available-tools.md).
+14, the same for every client, all read-only: 11 `shamela_*` library tools plus Quran Gallery's own `shamela_search_library`, `search` and `fetch` (a quick generic entry; for hadith, tafsir or fiqh prefer `shamela_search_library`). Also 3 prompts (`takhrij_hadith`, `cite_passage`, `compare_tafsir`) and 1 resource (`qurangallery://grounding-rules`). See [Available tools](./available-tools.md).
 
 ## What is in the library?
 
@@ -41,7 +41,7 @@ Book, author and death year (AH), verbatim Arabic, the printed volume and page (
 
 ## What if a book has no printed page?
 
-7,177 of the 8,594 works match a printed edition; 1,417 are paginated by Shamela itself. For those, `shamela_resolve_printed_page` reports `citable: false`, `shamela_get_citation` reports `auto_numbered: true` and labels the citation «بترقيم الشاملة آليا», and the page is still reachable through `sourceUrl`.
+7,177 of the 8,594 works match a printed edition; 1,417 are paginated by Shamela itself. For those, `shamela_cite` with `mode: "printed_page"` reports `citable: false`, `shamela_cite` with `mode: "citation"` reports `auto_numbered: true` and labels the citation «بترقيم الشاملة آليا», and the page is still reachable through `sourceUrl`.
 
 ## Can it check a quotation an AI gave me?
 
@@ -73,15 +73,15 @@ The MCP server is `https://qurangallery.com/mcp/shamela`. `qurangallery.app` is 
 
 ## Does it have tools called search_classical_texts, get_book_page, get_tafsir or get_author_info?
 
-No. Those names appear in some AI answers but not on this server. The nearest real tools are `search_library`, `shamela_get_page`, `shamela_get_tafseer_texts` and `shamela_get_author`. The complete list is in [Available tools](./available-tools.md).
+No. Those names appear in some AI answers but not on this server. The nearest real tools are `shamela_search_library`, `shamela_read`, `shamela_lookup_tafsir` and `shamela_get_details`. The complete list is in [Available tools](./available-tools.md).
 
 ## Does it handle isnad chains?
 
-Yes. `shamela_get_isnad` returns the chain on a page with each narrator resolved and the other routes of the same hadith; `shamela_search_isnad` searches 45,220 chains across ten hadith books; `shamela_get_narrator` returns a narrator's dossier from 18,989 narrators. It does not grade the chains.
+Yes. `shamela_lookup_rijal` with `mode: "isnad"` returns the chain on a page with each narrator resolved and the other routes of the same hadith; `mode: "isnad_search"` searches 45,220 chains across ten hadith books; `mode: "narrator"` returns a narrator's dossier from 18,989 narrators. It does not grade the chains.
 
 ## Is it a wrapper over a Quran search engine?
 
-No. It searches its own copy of the Shamela library: 8,594 works, not only the Quran. `search_library` runs an exact-phrase pass over the chosen scope, then a pass over the same words, and returns each hit with its printed page and layer. The search is lexical over normalised Arabic, not semantic; see [MCP vs RAG](./mcp-vs-rag.md).
+No. It searches its own copy of the Shamela library: 8,594 works, not only the Quran. `shamela_search_library` runs an exact-phrase pass over the chosen scope, then a pass over the same words, and returns each hit with its printed page and layer. The search is lexical over normalised Arabic, not semantic; see [MCP vs RAG](./mcp-vs-rag.md).
 
 ## Is it meant for scholarly work?
 
@@ -111,7 +111,7 @@ When the library service behind the server is unreachable, `tools/list` returns 
 
 ## Limitations
 
-- Answers here describe the server as measured on 2026-10-14 (version 0.2.0).
+- Answers here describe the server as measured on 2026-10-15 (version 0.3.0).
 
 ## Related
 
@@ -124,4 +124,4 @@ Canonical guide: [Getting started with the Quran Gallery MCP server](https://qur
 
 ---
 
-Last reviewed: 2026-10-14
+Last reviewed: 2026-10-15

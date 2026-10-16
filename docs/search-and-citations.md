@@ -1,20 +1,20 @@
 # How does search work in the Shamela MCP server, and how are citations given?
 
-> `search_library` searches one of twelve named scopes, tries the exact phrase before the words separately, and returns verbatim Arabic with book, edition, printed volume/page and a shamela.ws link.
+> `shamela_search_library` searches one of twelve named scopes, tries the exact phrase before the words separately, and returns verbatim Arabic with book, edition, printed volume/page and a shamela.ws link.
 > Each passage says whether the words were in the author's main text or an editor's footnote, and whether the exact phrase was found.
 
 ## Queries must be Arabic
 
-The library and its index are Arabic. `search_library` and `search` reject a query with no Arabic letters as a tool error (`isError`), with this message:
+The library and its index are Arabic. `shamela_search_library` and `search` reject a query with no Arabic letters as a tool error (`isError`), with this message:
 
 ```text
 The library is Arabic, so the query must contain Arabic words. Translate the search terms
 into Arabic and call again, for example «إنما الأعمال بالنيات» for "actions are judged by intentions".
 ```
 
-This applies to English and to transliteration alike. A query that mixes Arabic with other words is accepted. The raw `shamela_*` tools pass the query through unchanged: `shamela_search_phrase` answers an English query with `BAD_ARG: Query has no searchable Arabic words.`, while `shamela_search_pages` searches the Latin letters as given, which is almost never useful.
+This applies to English and to transliteration alike. A query that mixes Arabic with other words is accepted. The raw `shamela_*` tools pass the query through unchanged: `shamela_search` with `match: "phrase"` answers an English query with `BAD_ARG: Query has no searchable Arabic words.`, while `match: "words"` searches the Latin letters as given, which is almost never useful.
 
-## Why `search_library` requires a scope
+## Why `shamela_search_library` requires a scope
 
 Unscoped, the index ranks by term frequency, which knows nothing about scholarly authority. Measured examples:
 
@@ -62,7 +62,7 @@ Live call, 2026-10-14:
 
 ```json
 {
-  "name": "search_library",
+  "name": "shamela_search_library",
   "arguments": { "query": "إنما الأعمال بالنيات", "scope": "hadith-primary" }
 }
 ```
@@ -119,11 +119,11 @@ Passage fields:
 | `edition`, `editor`, `publisher` | Present only when the library records them; never guessed |
 | `sourceUrl` | `https://shamela.ws/book/{bookId}/{pageId}` |
 
-To read the whole page, pass `bookId` and `pageId` to `shamela_get_page`.
+To read the whole page, pass `bookId` and `pageId` to `shamela_read`.
 
 ## Main text (matn) vs editor's footnote (tahqiq): the matchedIn field
 
-Modern printings carry two layers: the author's text (matn, المتن) and the editor's footnotes (الحواشي), the apparatus of the edition's tahqiq (التحقيق). `matchedIn` on every `search_library` passage says which layer the words were found in: `body`, `footnote`, `both` or `unknown`. In the example above, the Abu Dawud hit at `3/ 526` is `matchedIn: "footnote"`. The words sit in a note quoting al-Khattabi's commentary («قال الخطابي: قوله: إنما الأعمال بالنيات…»); Abu Dawud's own text on that page has «بالنية». Presenting that note as Abu Dawud's words would be a false attribution built from true parts.
+Modern printings carry two layers: the author's text (matn, المتن) and the editor's footnotes (الحواشي), the apparatus of the edition's tahqiq (التحقيق). `matchedIn` on every `shamela_search_library` passage says which layer the words were found in: `body`, `footnote`, `both` or `unknown`. In the example above, the Abu Dawud hit at `3/ 526` is `matchedIn: "footnote"`. The words sit in a note quoting al-Khattabi's commentary («قال الخطابي: قوله: إنما الأعمال بالنيات…»); Abu Dawud's own text on that page has «بالنية». Presenting that note as Abu Dawud's words would be a false attribution built from true parts.
 
 | `matchedIn` | Say |
 | --- | --- |
@@ -134,15 +134,16 @@ To search one layer only:
 
 | Tool | Where the filter goes |
 | --- | --- |
-| `shamela_search_phrase`, `shamela_search_boolean` | top-level `search_in`: `["body"]` or `["foot"]` |
-| `shamela_search_pages` | `options.search_in` |
+| `shamela_search` with `match` `phrase`, `near` or `boolean` | top-level `search_in`: `["body"]` or `["foot"]` |
+| `shamela_search` with `match` `words` (default) | `options.search_in` |
 
 Putting `search_in` in the wrong place fails strict validation (for example `Unrecognized key(s) in object: 'options'`). The page's `comment` field is not searchable. The raw tools report the layer as `matched_in`.
 
 ```json
 {
-  "name": "shamela_search_phrase",
+  "name": "shamela_search",
   "arguments": {
+    "match": "phrase",
     "query": "إنما الأعمال بالنيات",
     "search_in": ["body"],
     "scope": { "book_ids": [117359, 98138, 1681] }
@@ -163,14 +164,15 @@ The index stores normalised words and normalises your query the same way.
 | Ta marbuta and ha | «رحمة الله» / «رحمه الله» | Yes: 37 hits in Sahih al-Bukhari (Sultaniyya) for both |
 | Alif maqsura and ya | «النبى» / «النبي» | Yes: the same 4,707 pages for both |
 
-`shamela_search_pages` returns `normalized_tokens`, the form actually searched.
+`shamela_search` with `match: "words"` returns `normalized_tokens`, the form actually searched.
 
-When a spelling must match exactly, use `shamela_search_exact` with a `preserve` object (`preserve_diacritics`, `preserve_hamza`, `preserve_digits`; at least one true):
+When a spelling must match exactly, use `shamela_search` with `match: "exact"` and a `preserve` object (`preserve_diacritics`, `preserve_hamza`, `preserve_digits`; at least one true):
 
 ```json
 {
-  "name": "shamela_search_exact",
+  "name": "shamela_search",
   "arguments": {
+    "match": "exact",
     "query": "عِلْم",
     "preserve": { "preserve_diacritics": true },
     "scope": { "book_ids": [1681] },
@@ -179,16 +181,16 @@ When a spelling must match exactly, use `shamela_search_exact` with a `preserve`
 }
 ```
 
-It gathers candidates with a normalised search, then checks each page's raw text. Check `candidate_cap_hit` (the candidate list was truncated) and `total_verified` before trusting a negative; the cap scales with `limit`. The `preserve_*` options on `shamela_search_pages` return `OPTION_NOT_SUPPORTED`.
+It gathers candidates with a normalised search, then checks each page's raw text. Check `candidate_cap_hit` (the candidate list was truncated) and `total_verified` before trusting a negative; the cap scales with `limit`. The `preserve_*` options on `shamela_search` with `match: "words"` return `OPTION_NOT_SUPPORTED`.
 
 ## Root expansion, wildcards and boolean search
 
 | Feature | How | Watch for |
 | --- | --- | --- |
-| Root expansion | `shamela_search_pages`, `options.morphology: true` | Every root reading is searched. «كتب» expands to `كتب, تبب, توب, وتب`; in Sahih al-Bukhari it matches 110 pages plain and 714 expanded. Read `morphology_expanded_to`. |
+| Root expansion | `shamela_search` (`match: "words"`), `options.morphology: true` | Every root reading is searched. «كتب» expands to `كتب, تبب, توب, وتب`; in Sahih al-Bukhari it matches 110 pages plain and 714 expanded. Read `morphology_expanded_to`. |
 | Wildcards | `options.wildcards: true`; `*` any run of letters, `?` one letter | `صيا*` matches 52 pages in Sahih al-Bukhari. Cannot combine with morphology (`OPTION_CONFLICT`). Irregular stored spellings (مائة is stored as ميه) defeat a prefix such as `مائ*`. |
-| Boolean | `shamela_search_boolean`: `all_of`, `any_of`, `none_of` | At least one of `all_of` or `any_of`. `total_hits` is exact; `zero_hit_terms` lists words found nowhere. |
-| Relaxing an empty query | `shamela_search_pages`, `options.relax_when_empty` (on by default) | Retries with fewer words, never fewer than half; reports `relaxed_min_match` and `relaxed_of_terms`. Set it to `false` when an empty answer is the answer you need. If the plain search and this retry both find nothing and the query has six words or fewer, a last retry by Arabic root sets `morphology_fallback: true`; its results are other word forms from the same roots. |
+| Boolean | `shamela_search` with `match: "boolean"`: `all_of`, `any_of`, `none_of` | At least one of `all_of` or `any_of`. `total_hits` is exact; `zero_hit_terms` lists words found nowhere. |
+| Relaxing an empty query | `shamela_search` (`match: "words"`), `options.relax_when_empty` (on by default) | Retries with fewer words, never fewer than half; reports `relaxed_min_match` and `relaxed_of_terms`. Set it to `false` when an empty answer is the answer you need. If the plain search and this retry both find nothing and the query has six words or fewer, a last retry by Arabic root sets `morphology_fallback: true`; its results are other word forms from the same roots. |
 
 ## Grounding rules
 
@@ -210,7 +212,7 @@ A good citation: al-Bukhārī, Ṣaḥīḥ al-Bukhārī, ṭ. al-Sulṭāniyya,
 - A result proves that this passage is printed in this book at this page in this edition. It does not prove authenticity, that the view is the majority view, or that it answers the question asked.
 - The server guarantees the passage, book and page are real and retrieved; it cannot guarantee the sentence an assistant builds around them is a fair reading.
 - `search` (for ChatGPT deep research) is unscoped and ranks by term frequency.
-- One `search_library` call counts as one request against the rate limit ([Rate limits and errors](./rate-limits.md)).
+- One `shamela_search_library` call counts as one request against the rate limit ([Rate limits and errors](./rate-limits.md)).
 
 ## Related
 
@@ -218,7 +220,7 @@ A good citation: al-Bukhārī, Ṣaḥīḥ al-Bukhārī, ṭ. al-Sulṭāniyya,
 - [Hadith takhrij](./hadith-takhrij.md)
 - [Available tools](./available-tools.md)
 
-Canonical guides: [search_library reference](https://qurangallery.com/docs/mcp/search-library) · [Choosing a scope](https://qurangallery.com/docs/mcp/scopes) · [Reading a result](https://qurangallery.com/docs/mcp/reading-results) · [Grounding rules](https://qurangallery.com/docs/mcp/grounding-rules)
+Canonical guides: [shamela_search_library reference](https://qurangallery.com/docs/mcp/search-library) · [Choosing a scope](https://qurangallery.com/docs/mcp/scopes) · [Reading a result](https://qurangallery.com/docs/mcp/reading-results) · [Grounding rules](https://qurangallery.com/docs/mcp/grounding-rules)
 
 ---
 

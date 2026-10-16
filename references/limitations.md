@@ -9,7 +9,7 @@ The server guarantees one thing: the passage, the book and the page it returns w
 
 | It will not | What happens instead |
 | --- | --- |
-| Grade a hadith as ṣaḥīḥ (صحيح), ḥasan (حسن) or ḍaʿīf (ضعيف) | Where a book or an editor's footnote states a grading, that is returned as text, and belongs to whoever wrote it. `shamela_get_narrator` returns Ibn Hajar's and al-Dhahabi's verdicts on narrators from the register, attributed to them. |
+| Grade a hadith as ṣaḥīḥ (صحيح), ḥasan (حسن) or ḍaʿīf (ضعيف) | Where a book or an editor's footnote states a grading, that is returned as text, and belongs to whoever wrote it. `shamela_lookup_rijal` with `mode: "narrator"` returns Ibn Hajar's and al-Dhahabi's verdicts on narrators from the register, attributed to them. |
 | Give a ruling or fatwa (فتوى) | A passage from a fiqh manual is evidence of what that manual says, not a ruling for anyone's situation. |
 | Stop an assistant from misattributing a passage | The page is real; the sentence built around it may not be a fair reading. Rules for assistants: [Stop hallucinated citations](../docs/stop-hallucinated-citations.md). |
 | Replace a scholar | Retrieval is not understanding. |
@@ -22,12 +22,12 @@ The server guarantees one thing: the passage, the book and the page it returns w
 
 ## Before you trust a result (as of 2026-10-14)
 
-1. **Printed or automatic pagination?** 7,177 of the 8,594 works are paginated as a printed edition (يوافق المطبوع). The other 1,417 use Shamela's automatic numbering (بترقيم الشاملة آليا), which matches no printed copy. Look for `citable: false` from `shamela_resolve_work` or `shamela_resolve_printed_page`, or `auto_numbered: true` from `shamela_get_citation`.
+1. **Printed or automatic pagination?** 7,177 of the 8,594 works are paginated as a printed edition (يوافق المطبوع). The other 1,417 use Shamela's automatic numbering (بترقيم الشاملة آليا), which matches no printed copy. Look for `citable: false` from `shamela_find` (`kind: "work"`) or `shamela_cite` (`mode: "printed_page"`), or `auto_numbered: true` from `shamela_cite` (`mode: "citation"`).
 2. **Main text or footnote?** `matchedIn: "footnote"` means the words are in the editor's apparatus (tahqiq, تحقيق), not the author's text (matn, متن). Attribute them to the note.
-3. **Exact phrase or loose match?** `relaxedToTokens: true` means the exact phrase was not found; the page only carries the same words separately. It is not a quotation of the phrase. The same goes for `relaxed_min_match` / `relaxed_of_terms` (no page held every word), `relaxed.dropped_term` from `shamela_search_hadith` (one word was left out of the query) and `morphology_fallback: true` from `shamela_search_pages` (other word forms from the same roots). Say how the match was made.
+3. **Exact phrase or loose match?** `relaxedToTokens: true` means the exact phrase was not found; the page only carries the same words separately. It is not a quotation of the phrase. The same goes for `relaxed_min_match` / `relaxed_of_terms` (no page held every word), `relaxed.dropped_term` from `shamela_lookup_hadith` (one word was left out of the query) and `morphology_fallback: true` from `shamela_search` with `match: "words"` (other word forms from the same roots). Say how the match was made.
 4. **Which printing?** Page numbers belong to one printing. `edition` and the entry name say which; a page from one printing cannot be cited against another.
 5. **Which scope?** "Not in the eight primary collections" is a finding. "Does not exist" is not.
-6. **Is this the book asked for?** `shamela_resolve` with `no_confident_match.note`, or `shamela_search_books` with `no_title_match: true`, means no title carries the whole name asked for. Report the book as not held here; do not cite a near-miss title in its place.
+6. **Is this the book asked for?** `shamela_find` with `kind: "name"` and `no_confident_match.note`, or `shamela_find` with `kind: "book"` and `no_title_match: true`, means no title carries the whole name asked for. Report the book as not held here; do not cite a near-miss title in its place.
 7. **One source or two?** Hits in two entries of the same work (`same_group`, `edition_groups`) are the same text twice.
 
 Field details: [Source attribution](./source-attribution.md).
@@ -37,9 +37,9 @@ Field details: [Source attribution](./source-attribution.md).
 | Area | Limitation |
 | --- | --- |
 | Corpus | A fixed copy of Maktabah al-Shamela (المكتبة الشاملة): 8,594 works, 3,188 authors, 41 categories, all downloaded. Books added to Shamela later are not in it until the copy is updated. |
-| Scopes | The 12 scopes of `search_library` cover 7,084 works. The other 1,510 are reachable only through the raw `shamela_*` tools and the unscoped `search`. |
+| Scopes | The 12 scopes of `shamela_search_library` cover 7,084 works. The other 1,510 are reachable only through the raw `shamela_*` tools and the unscoped `search`. |
 | Unscoped ranking | Unscoped search ranks by how often the words occur. For «التيمم» it returns 26,098 hits topped by a 710 AH poetry anthology; for «إنما الأعمال بالنيات» 6,815 hits in which Sahih al-Bukhari does not appear. Use a scope. |
-| Takhrij keys | Cross-collection hadith keys exist in ten indexed books only. `shamela_search_hadith` can find a hadith on 1,746 pages and still return takhrij (تخريج) from those ten. |
+| Takhrij keys | Cross-collection hadith keys exist in ten indexed books only. `shamela_lookup_hadith` (`mode: "search"`) can find a hadith on 1,746 pages and still return takhrij (تخريج) from those ten. |
 | Isnad index | 45,220 chains in ten hadith books (book ids 1681, 711, 654, 7895, 829, 28107, 1456, 627/13071 and 642: Bukhari, Muslim, Abu Dawud, al-Tirmidhi, al-Nasa'i, the Muwatta', al-Tayalisi, Ibn al-Jarud and al-Tirmidhi's ʿIlal). Other books return `no_isnad_indexed: true`. |
 | Narrators | 18,989 narrators with death years between 2 and 774 AH. Names repeat; check the death year. |
 | Searchable text | The main text and footnotes are searchable. A page's `comment` field (user notes) is returned by the page readers but is not searchable. |
@@ -70,4 +70,4 @@ Canonical guide: [Quran Gallery MCP server overview](https://qurangallery.com/do
 
 ---
 
-Last reviewed: 2026-10-14
+Last reviewed: 2026-10-15

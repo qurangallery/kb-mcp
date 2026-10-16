@@ -17,7 +17,7 @@ curl -s https://qurangallery.com/mcp/shamela \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | head -c 300
 ```
 
-A body starting `{"jsonrpc":"2.0","id":1,"result":{"tools":[{"name":"search_library"` means the server is up and the problem is in the client configuration.
+A body starting `{"jsonrpc":"2.0","id":1,"result":{"tools":[{"name":"shamela_search_library"` means the server is up and the problem is in the client configuration.
 
 ## Connection problems
 
@@ -28,7 +28,7 @@ A body starting `{"jsonrpc":"2.0","id":1,"result":{"tools":[{"name":"search_libr
 | A `GET` in a browser shows a short JSON description instead of tools | Expected. A `GET` asking for JSON returns the server's name, transport and docs link; tools are only served over `POST`. | Nothing to fix. |
 | The client connects but lists zero tools | The library service behind the server is unreachable, so `tools/list` returns an empty list rather than tools that would fail. | Wait a minute, then reconnect or refresh the tool list. |
 | Tools are missing or out of date after a change | Most clients read the tool list once, when the server connects. | Reconnect the server or restart the client. Per client: Claude Code `/mcp` then reconnect; Gemini CLI restart and `/mcp list`; Cursor toggle the server off and on; VS Code and Copilot **MCP: List Servers** then restart; Claude.ai **Refresh tools list**; ChatGPT **Refresh tools**, then a new conversation. |
-| The client refuses to load all tools | Some clients cap the number of tools loaded across all servers. This server has 39. | Turn off servers you do not need in that client. |
+| The client refuses to load all tools | Some clients cap the number of tools loaded across all servers. This server lists 14. | Turn off servers you do not need in that client. |
 | GitHub Copilot never shows the tools | Organisation policy can disable MCP servers for Copilot. | Ask the administrator whether MCP servers are allowed. |
 
 ## Authentication errors
@@ -48,7 +48,7 @@ The server never refuses a request for lacking a key. It does check any key it i
 | --- | --- | --- |
 | HTTP 429, `-32004`, message beginning "Keyless limit reached" | No key: the limit is 10 tool calls a minute and 200 a day per IP address. Keyless callers also share a pool, so a busy moment can refuse a call before your own limit. | Wait for the `Retry-After` header, or add a free key (60 tool calls a minute, no daily cap). |
 | HTTP 429 with a key | 60 tool calls a minute per key. | Wait for `Retry-After`. |
-| A page-range read returns fewer pages than asked | Keyless caps: `shamela_get_pages_range` 5 pages, `shamela_get_book_section` 10. | Continue from where the response says, or use a key (20 and 100). |
+| A page-range read returns fewer pages than asked | Keyless caps: `shamela_read` with `unit: "range"` 5 pages, with `unit: "section"` 10. | Continue from where the response says, or use a key (20 and 100). |
 
 The numbers and headers are in [Rate limits and errors](./rate-limits.md).
 
@@ -56,11 +56,11 @@ The numbers and headers are in [Rate limits and errors](./rate-limits.md).
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Tool error: "The library is Arabic, so the query must contain Arabic words. Translate the search terms into Arabic and call again, …" | `search_library` or `search` was given English or transliterated words. | Have the assistant translate the search terms into Arabic. You can still ask in any language. |
-| `BAD_ARG: Query has no searchable Arabic words.` | The same mistake on `shamela_search_phrase`. | Same fix. |
+| Tool error: "The library is Arabic, so the query must contain Arabic words. Translate the search terms into Arabic and call again, …" | `shamela_search_library` or `search` was given English or transliterated words. | Have the assistant translate the search terms into Arabic. You can still ask in any language. |
+| `BAD_ARG: Query has no searchable Arabic words.` | The same mistake on `shamela_search` with `match: "phrase"`. | Same fix. |
 | `BAD_ARG: <tool> was called with invalid arguments. …` | A `shamela_*` tool got an argument it cannot use, such as `book_id` 0 or a string where `scope` must be an object. The text names the argument and what to send. | Correct that argument and call again. |
-| Tool error: "scope is required and must be one of: hadith-primary, tafsir-canonical, fiqh-hanafi, …" | `search_library` was called without `scope` or with a name that does not exist. | Pick one of the 12 scopes; see [Available tools](./available-tools.md). |
-| `Unrecognized key(s) in object: 'options'` | `search_in` was put in the wrong place. `shamela_search_phrase` and `shamela_search_boolean` take it at the top level; `shamela_search_pages` takes it inside `options`. | Move it to where that tool's schema expects it. Unknown arguments are rejected, not ignored. |
+| Tool error: "scope is required and must be one of: hadith-primary, tafsir-canonical, fiqh-hanafi, …" | `shamela_search_library` was called without `scope` or with a name that does not exist. | Pick one of the 12 scopes; see [Available tools](./available-tools.md). |
+| `Unrecognized key(s) in object: 'options'` | `search_in` was put in the wrong place. `shamela_search` takes it at the top level with `match` set to `phrase`, `near` or `boolean`, and inside `options` with the default `match: "words"`. | Move it to where that tool's schema expects it. Unknown arguments are rejected, not ignored. |
 | Protocol error `-32601` "Unsupported method" or an unknown tool | The method or tool name does not exist. Names such as `search_classical_texts`, `get_book_page` or `get_tafsir` are not tools on this server. | Use names from `tools/list`. |
 | Protocol error `-32601` saying the library is temporarily unreachable (HTTP 200) | The library service was down when the call was made. | Wait a minute and retry. |
 | HTTP 400, `-32700`, "Invalid JSON." | The body is not valid JSON. | Fix the request; retrying it unchanged fails again. |
@@ -71,11 +71,11 @@ The numbers and headers are in [Rate limits and errors](./rate-limits.md).
 ## The search found nothing, or found the wrong thing
 
 - **`relaxedToTokens: true`.** The exact phrase was not found; the pages only carry the same words separately. Do not present such a hit as a quotation.
-- **`relaxed`, `morphology_fallback: true` or `relaxed_min_match` on a raw search.** The result is a near match: a word was dropped (`shamela_search_hadith`, see `relaxed.dropped_term`), other word forms from the same roots were searched (`shamela_search_pages`), or no page held every word. Say how the match was made.
+- **`relaxed`, `morphology_fallback: true` or `relaxed_min_match` on a raw search.** The result is a near match: a word was dropped (`shamela_lookup_hadith` with `mode: "search"`, see `relaxed.dropped_term`), other word forms from the same roots were searched (`shamela_search` with the default `match: "words"`), or no page held every word. Say how the match was made.
 - **`no_confident_match` or `no_title_match: true`.** No book title carries the whole name asked for. Report the book as not held here rather than citing the closest title.
 - **Empty `passages`.** The note reads "Neither the exact phrase nor its words together appear anywhere in this scope." That is a finding about the books in that scope, not about the whole library. Try another scope, a shorter phrase, or a different spelling.
 - **The words are in a footnote.** `matchedIn: "footnote"` means an editor's note on the page carries them, not the author's text.
-- **The unscoped `search` or `shamela_search_pages` ranks odd books first.** Unscoped ranking is by how often the words occur, so a poetry anthology can outrank Sahih al-Bukhari. Use `search_library` with a scope.
+- **The unscoped `search` or `shamela_search` with `match: "words"` ranks odd books first.** Unscoped ranking is by how often the words occur, so a poetry anthology can outrank Sahih al-Bukhari. Use `shamela_search_library` with a scope.
 
 These are covered in [Search and citations](./search-and-citations.md).
 
@@ -106,4 +106,4 @@ Canonical guide: [Limits and errors](https://qurangallery.com/docs/mcp/limits-an
 
 ---
 
-Last reviewed: 2026-10-14
+Last reviewed: 2026-10-15

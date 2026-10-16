@@ -1,6 +1,6 @@
 # How do I verify a quotation from a classical Islamic book with MCP?
 
-> Resolve the edition with `shamela_resolve_work`, turn the printed volume/page into page ids with `shamela_resolve_printed_page`, read each page with `shamela_get_page`, then format the reference with `shamela_get_citation`.
+> Resolve the edition with `shamela_find` (`kind: "work"`), turn the printed volume/page into page ids with `shamela_cite` (`mode: "printed_page"`), read each page with `shamela_read`, then format the reference with `shamela_cite` (`mode: "citation"`).
 > Each step's result decides the next; a page number is only comparable against the printing it came from.
 
 There is no single "verify" tool. The worked example below checks the claim: *Sahih al-Bukhari, Sultaniyya edition, vol. 1, p. 6, has «إنما الأعمال بالنيات».*
@@ -15,8 +15,8 @@ Of the library's 8,594 entries, 7,177 are flagged by Shamela as matching a print
 
 ```json
 {
-  "name": "shamela_resolve_work",
-  "arguments": { "title": "صحيح البخاري", "edition": "ط السلطانية" }
+  "name": "shamela_find",
+  "arguments": { "kind": "work", "title": "صحيح البخاري", "edition": "ط السلطانية" }
 }
 ```
 
@@ -38,14 +38,14 @@ Asking for `ط دار طوق النجاة` returns `edition_not_found` with `ava
 | 1376 | ن عطاءات العلم | false |
 | 1681 | ط السلطانية | true |
 
-The title must be the start of the work's name; `author` is a filter, not a search. Use this tool rather than `shamela_resolve`, which ranks and therefore always returns a winner.
+The title must be the start of the work's name; `author` is a filter, not a search. Use this tool rather than `shamela_find` with `kind: "name"`, which ranks and therefore always returns a winner.
 
 ## Step 2: resolve the printed page
 
 ```json
 {
-  "name": "shamela_resolve_printed_page",
-  "arguments": { "book_id": 1681, "part": "1", "page": 6 }
+  "name": "shamela_cite",
+  "arguments": { "mode": "printed_page", "book_id": 1681, "part": "1", "page": 6 }
 }
 ```
 
@@ -79,8 +79,8 @@ Volume labels are not always digits: a front-matter part can be labelled «ال�
 
 ```json
 {
-  "name": "shamela_get_page",
-  "arguments": { "book_id": 1681, "page_id": 10 }
+  "name": "shamela_read",
+  "arguments": { "unit": "page", "book_id": 1681, "page_id": 10 }
 }
 ```
 
@@ -94,14 +94,14 @@ The page has three fields:
 
 For page 10, `body` contains the hadith («إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى…») and `foot` is empty. Compare the quotation with `body` and `foot` separately; the layer is part of the claim.
 
-Shortcut when you have the wording but not the page: `search_library` with the phrase and a scope returns `printedPage`, `matchedIn` and `relaxedToTokens` in one call. If `relaxedToTokens` is `true`, the exact phrase was not found.
+Shortcut when you have the wording but not the page: `shamela_search_library` with the phrase and a scope returns `printedPage`, `matchedIn` and `relaxedToTokens` in one call. If `relaxedToTokens` is `true`, the exact phrase was not found.
 
 ## Step 4: write the citation
 
 ```json
 {
-  "name": "shamela_get_citation",
-  "arguments": { "book_id": 1681, "page_id": 10, "style": "short" }
+  "name": "shamela_cite",
+  "arguments": { "mode": "citation", "book_id": 1681, "page_id": 10, "style": "short" }
 }
 ```
 
@@ -140,4 +140,4 @@ Canonical guide: [Grounding rules for answers built on the library](https://qura
 
 ---
 
-Last reviewed: 2026-10-14
+Last reviewed: 2026-10-15

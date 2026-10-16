@@ -13,8 +13,8 @@
 | State | None. No `Mcp-Session-Id` is issued; each request stands alone |
 | Replies | One JSON object, `Content-Type: application/json` |
 | Protocol versions | `2025-11-25`, `2025-06-18` |
-| Server info | `name: qurangallery-shamela`, `version: 0.2.0` (live on 2026-10-14) |
-| Capabilities | 39 tools, 3 prompts, 1 resource |
+| Server info | `name: qurangallery-shamela`, `version: 0.3.0` (live on 2026-10-15) |
+| Capabilities | 14 tools (the same for every client), 3 prompts, 1 resource |
 | Authentication | None. Optional `Authorization: Bearer qg_sk_…` raises limits |
 | CORS | `Access-Control-Allow-Origin: *` |
 
@@ -40,10 +40,10 @@ await client.connect(
 );
 
 const { tools } = await client.listTools();
-console.log(tools.length, tools[0].name); // 39 search_library
+console.log(tools.length, tools[0].name); // 14 shamela_search_library
 
 const result = await client.callTool({
-  name: 'search_library',
+  name: 'shamela_search_library',
   arguments: { query: 'إنما الأعمال بالنيات', scope: 'hadith-primary' }
 });
 const hit = result.structuredContent.passages[0];
@@ -51,7 +51,7 @@ console.log(hit.book, hit.printedPage, hit.matchedIn, hit.sourceUrl);
 await client.close();
 ```
 
-`search_library` returns its result as `structuredContent` (`passages`, `scope`, `booksSearched`, `totalMatches`, …) as well as text content. To send a key:
+`shamela_search_library` returns its result as `structuredContent` (`passages`, `scope`, `booksSearched`, `totalMatches`, …) as well as text content. To send a key:
 
 ```typescript
 new StreamableHTTPClientTransport(url, {
@@ -100,7 +100,7 @@ A tool call:
 curl -s https://qurangallery.com/mcp/shamela \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json, text/event-stream' \
-  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"search_library","arguments":{"query":"إنما الأعمال بالنيات","scope":"hadith-primary"}}}'
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"shamela_search_library","arguments":{"query":"إنما الأعمال بالنيات","scope":"hadith-primary"}}}'
 ```
 
 ## Python (standard library)
@@ -118,7 +118,7 @@ def call(method, params=None, id=1):
 
 tools = call('tools/list')['result']['tools']
 hit = call('tools/call', {
-    'name': 'search_library',
+    'name': 'shamela_search_library',
     'arguments': {'query': 'إنما الأعمال بالنيات', 'scope': 'hadith-primary'},
 })['result']['structuredContent']['passages'][0]
 print(len(tools), hit['book'], hit['printedPage'], hit['matchedIn'])
@@ -131,7 +131,7 @@ print(len(tools), hit['book'], hit['printedPage'], hit['matchedIn'])
 - The tool list was requested after connecting; most clients have a refresh action.
 - The `Authorization` header is a real key or absent.
 - The library behind the server may be briefly unreachable. `tools/list` then returns an empty list with HTTP 200 rather than tools that would fail. Wait a minute and reconnect.
-- Some clients cap the number of tools loaded across all servers. This server has 39; turn off servers you do not need.
+- Some clients cap the number of tools loaded across all servers. This server lists 14; turn off servers you do not need.
 
 ## Limitations
 
@@ -148,4 +148,4 @@ Canonical guide: [Getting started with the Quran Gallery MCP server](https://qur
 
 ---
 
-Last reviewed: 2026-10-14
+Last reviewed: 2026-10-15

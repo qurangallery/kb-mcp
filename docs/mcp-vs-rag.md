@@ -43,11 +43,11 @@ Hybrid BM25 helps exact wording but does not restore page boundaries, layers or 
 
 What is documented and observable from the live server on 2026-10-14:
 
-- **Lexical, not semantic.** Search runs over Shamela's own full-text (Lucene) index of normalised Arabic words. No tool exposes semantic or vector search. Diacritics, hamza on alif, ta marbuta/ha and alif maqsura/ya are folded at index and query time; `shamela_search_exact` checks the raw text when a spelling must match.
-- **Scoped first.** `search_library` refuses to run without one of 12 scopes, because unscoped ranking is by term frequency: «التيمم» unscoped returns 26,098 hits topped by a 710 AH poetry anthology.
+- **Lexical, not semantic.** Search runs over Shamela's own full-text (Lucene) index of normalised Arabic words. No tool exposes semantic or vector search. Diacritics, hamza on alif, ta marbuta/ha and alif maqsura/ya are folded at index and query time; `shamela_search` with `match: "exact"` checks the raw text when a spelling must match.
+- **Scoped first.** `shamela_search_library` refuses to run without one of 12 scopes, because unscoped ranking is by term frequency: «التيمم» unscoped returns 26,098 hits topped by a 710 AH poetry anthology.
 - **Two passes.** Exact phrase first; only if that finds nothing, the same words anywhere on a page, flagged with `relaxedToTokens: true`.
 - **Page-scoped results.** Every hit is one page record with its printed volume and page, layer and printing.
-- **Resolution tools.** `shamela_resolve_work` turns a title and printing into a book id; `shamela_resolve_printed_page` turns a printed volume and page into the page records that carry it; `shamela_get_citation` formats the reference and lists what the catalogue does not record.
+- **Resolution tools.** `shamela_find` (`kind: "work"`) turns a title and printing into a book id; `shamela_cite` (`mode: "printed_page"`) turns a printed volume and page into the page records that carry it; `shamela_cite` (`mode: "citation"`) formats the reference and lists what the catalogue does not record.
 
 Details: [Search and citations](./search-and-citations.md) and [Source attribution](../references/source-attribution.md).
 
