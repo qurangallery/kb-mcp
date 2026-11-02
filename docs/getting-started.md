@@ -122,7 +122,7 @@ Find the hadith «إنما الأعمال بالنيات» in the primary collec
 which book, edition, volume and page it is printed on. Quote the Arabic exactly.
 ```
 
-The assistant should call `shamela_search_library` with `scope: "hadith-primary"`. The answer should name صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya printing), printed page `1/ 6`, main text, with the link `https://shamela.ws/book/1681/10`. If it answers from memory instead, reply: "Use the Quran Gallery library tool and quote what it returns."
+The assistant should call `shamela_search_library` with `scope: "hadith-primary"`. The answer should name صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya printing), printed page `1/ 6`, main text, with the link `https://qurangallery.com/maktabah/book/1681/10`. If it answers from memory instead, reply: "Use the Quran Gallery library tool and quote what it returns."
 
 Library queries must contain Arabic words. Ask in any language; the assistant translates the search terms.
 

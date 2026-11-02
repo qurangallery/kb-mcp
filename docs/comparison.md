@@ -29,7 +29,7 @@ Sources: Shamela Link [home page](https://shamela.link/en) (counts) and [guide](
 | Main text vs footnote | Yes, `matchedIn` on every hit, and searchable by layer | Yes, per its guide | Yes, per its README | Not stated |
 | Edition, editor, publisher | When recorded; never invented | Not stated | When Shamela's database has them, per its README | Not stated |
 | One-call quotation check | No; a four-call sequence ([guide](./verify-a-quotation.md)) | Yes, per its guide | Yes, `shamela_verify_quote` | Not stated |
-| Link to the page on shamela.ws | Yes, `sourceUrl` | Not stated | Not stated | Not stated |
+| Link to the page in the Maktabah reader | Yes, `sourceUrl` | Not stated | Not stated | Not stated |
 
 ## Servers for turath.io
 

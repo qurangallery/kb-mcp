@@ -10,7 +10,7 @@ This page compares three ways of grounding an assistant in classical Arabic text
 | | Web RAG | Your own vector or hybrid index | Dedicated MCP server (Quran Gallery's Shamela MCP) |
 | --- | --- | --- | --- |
 | What is searched | Whatever web pages the search engine returns: forums, fatwa sites, blogs, scanned PDFs, Shamela mirrors | The texts you collected, split into chunks and embedded (vector search), often combined with keyword scoring (hybrid BM25) | A fixed copy of Maktabah al-Shamela (المكتبة الشاملة): 8,594 works by 3,188 authors, 41 categories |
-| What comes back | Snippets of web pages | Chunks, ranked by similarity | Page-scoped passages, each with book, printing, author and death year, printed volume and page, layer and a shamela.ws link |
+| What comes back | Snippets of web pages | Chunks, ranked by similarity | Page-scoped passages, each with book, printing, author and death year, printed volume and page, layer and a Maktabah link |
 | Edition identity | Rarely visible: a quoted page number often comes with no printing named | Only if you stored it per chunk | Each printing is its own entry; `edition`, `editor` and `publisher` returned when recorded |
 | Printed page | Whatever the page quotes, often unverifiable | Lost unless your chunker kept page boundaries | `printedPage` as the printing paginates it, with automatic numbering flagged |
 | Main text vs footnote | Usually flattened | Usually flattened at chunking | `matchedIn`: `body`, `footnote`, `both` or `unknown` |

@@ -41,7 +41,7 @@ search { "query": "إنما الأعمال بالنيات" }
   → { "results": [
       { "id": "9823:66",
         "title": "شرح البخاري للسفيري = المجالس الوعظية في شرح أحاديث خير البرية — شمس الدين السفيري (1/110)",
-        "url": "https://shamela.ws/book/9823/66" },
+        "url": "https://qurangallery.com/maktabah/book/9823/66" },
       ... up to 10 ] }
 
 fetch { "id": "9823:66" }
@@ -57,7 +57,7 @@ Find the hadith «إنما الأعمال بالنيات» in the primary collec
 which book, edition, volume and page it is printed on. Quote the Arabic exactly.
 ```
 
-Expected: a hit in صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya edition) at printed page `1/ 6`, linked to `https://shamela.ws/book/1681/10`.
+Expected: a hit in صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya edition) at printed page `1/ 6`, linked to `https://qurangallery.com/maktabah/book/1681/10`.
 
 ## Troubleshooting
 

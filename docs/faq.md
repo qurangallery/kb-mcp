@@ -37,7 +37,7 @@ Yes.
 
 ## What does a result contain?
 
-Book, author and death year (AH), verbatim Arabic, the printed volume and page (`printedPage`), whether the words are in the main text or a footnote (`matchedIn`), edition, editor and publisher when recorded, and a `sourceUrl` on shamela.ws. `relaxedToTokens` says whether the exact phrase was found. See [Search and citations](./search-and-citations.md).
+Book, author and death year (AH), verbatim Arabic, the printed volume and page (`printedPage`), whether the words are in the main text or a footnote (`matchedIn`), edition, editor and publisher when recorded, and a `sourceUrl` in the Maktabah reader. `relaxedToTokens` says whether the exact phrase was found. See [Search and citations](./search-and-citations.md).
 
 ## What if a book has no printed page?
 
@@ -57,11 +57,11 @@ No. It finds and cites texts. A grading in a result is quoted from the book and 
 
 ## Is it open source?
 
-No. The server source is not published; this repository is documentation only. Each result links to shamela.ws so a reader can check it without trusting the server.
+No. The server source is not published; this repository is documentation only. Each result links to the Maktabah reader so a reader can check it without trusting the server.
 
 ## Is it the official Shamela server?
 
-No. It is run by Quran Gallery (qurangallery.com) and is not operated by or affiliated with shamela.ws. Texts and page structure come from Maktabah al-Shamela, and each passage is credited and linked back.
+No. It is run by Quran Gallery (qurangallery.com) and is not operated by or affiliated with shamela.ws. Texts and page structure come from Maktabah al-Shamela, and each passage is credited to it.
 
 ## Is it a browser extension?
 

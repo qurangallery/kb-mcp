@@ -31,7 +31,7 @@ Find the hadith «إنما الأعمال بالنيات» in the primary collec
 which book, edition, volume and page it is printed on. Quote the Arabic exactly.
 ```
 
-Expected: a hit in صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya edition) at printed page `1/ 6`, linked to `https://shamela.ws/book/1681/10`. If the answer comes from memory, reply: "Use the Quran Gallery library tool and quote what it returns."
+Expected: a hit in صحيح البخاري, ط السلطانية (Sahih al-Bukhari, Sultaniyya edition) at printed page `1/ 6`, linked to `https://qurangallery.com/maktabah/book/1681/10`. If the answer comes from memory, reply: "Use the Quran Gallery library tool and quote what it returns."
 
 ## Optional: a free key
 

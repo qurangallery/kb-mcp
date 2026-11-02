@@ -1,6 +1,6 @@
 # What source attribution does each Quran Gallery MCP result carry?
 
-> Every search hit names the book (including its printing), the author and death year (AH), the printed volume and page, whether the words are in the main text or an editor's footnote, and a link to the same page on shamela.ws.
+> Every search hit names the book (including its printing), the author and death year (AH), the printed volume and page, whether the words are in the main text or an editor's footnote, and a link to the same page in the Maktabah reader.
 > Edition, editor and publisher are returned only when the library records them; they are never guessed. City and edition number are never recorded.
 
 This page is the field-by-field reference for attributing a passage from Quran Gallery's Shamela MCP. The examples are live results from 2026-10-14.
@@ -20,7 +20,7 @@ A passage from `shamela_search_library` (and the record behind `fetch`):
   "arabic": "…عُمَرَ بْنَ الْخَطَّابِ ﵁ عَلَى الْمِنْبَرِ، قَالَ: سَمِعْت…",
   "matchedIn": "body",
   "matchQuality": "exact_phrase",
-  "sourceUrl": "https://shamela.ws/book/1681/10",
+  "sourceUrl": "https://qurangallery.com/maktabah/book/1681/10",
   "edition": "ط السلطانية",
   "publisher": "السلطانية"
 }
@@ -38,7 +38,7 @@ A passage from `shamela_search_library` (and the record behind `fetch`):
 | `arabic` | The passage as printed, markup removed, at most about 1,600 characters. A leading `…` means it starts mid-sentence; a trailing `…` means it was cut at the cap | Yes |
 | `matchedIn` | `body`, `footnote`, `both` or `unknown`: which layer of the page holds the words | Yes |
 | `matchQuality` | How the match was made, for example `exact_phrase` | Yes |
-| `sourceUrl` | `https://shamela.ws/book/{bookId}/{pageId}`, the same page on shamela.ws | Yes |
+| `sourceUrl` | `https://qurangallery.com/maktabah/book/{bookId}/{pageId}`, the same page in the Maktabah reader | Yes |
 | `edition` | The printing's label from the entry name | Only when recorded |
 | `editor` | The editor (muhaqqiq, محقق) | Only when recorded |
 | `publisher` | The publisher | Only when recorded |
@@ -138,7 +138,7 @@ Such a page number cannot be checked against any printed copy. Cite it only with
 
 From the Bukhari hit above:
 
-> «إنما الأعمال بالنيات» — al-Bukhari (d. 256 AH), Sahih al-Bukhari, Sultaniyya printing, vol. 1, p. 6 (main text). Via Maktabah al-Shamela, <https://shamela.ws/book/1681/10>, through Quran Gallery's Shamela MCP.
+> «إنما الأعمال بالنيات» — al-Bukhari (d. 256 AH), Sahih al-Bukhari, Sultaniyya printing, vol. 1, p. 6 (main text). Via Maktabah al-Shamela, <https://qurangallery.com/maktabah/book/1681/10>, through Quran Gallery's Shamela MCP.
 
 It names the work, the printing, the printed volume and page, the layer, and the library the text came from.
 
@@ -148,7 +148,7 @@ A modern printing of a classical work has two layers of authorship. The author's
 
 ## Credit and excerpts
 
-The texts, ids and catalogue data are Maktabah al-Shamela's (المكتبة الشاملة). Quran Gallery runs the MCP server over its own copy of the library and is not shamela.ws; `sourceUrl` lets any reader open the same page there. Searches return page-scoped excerpts capped at about 1,600 characters and the reading tools return single pages or short ranges; no call exports a book. Modern printings contain the editor's own work, so quote what the claim needs, with the citation, rather than reproducing pages at length.
+The texts, ids and catalogue data are Maktabah al-Shamela's (المكتبة الشاملة). Quran Gallery runs the MCP server over its own copy of the library and is not shamela.ws; `sourceUrl` lets any reader open the same page in the Maktabah reader. Searches return page-scoped excerpts capped at about 1,600 characters and the reading tools return single pages or short ranges; no call exports a book. Modern printings contain the editor's own work, so quote what the claim needs, with the citation, rather than reproducing pages at length.
 
 ## Limitations
 

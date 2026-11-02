@@ -90,7 +90,7 @@ It returned `verdict: "found"` with one match: Sunan Abi Dawud (Arnaut edition),
 | Tool | What it does | Key parameters | Try asking |
 | --- | --- | --- | --- |
 | `shamela_verify_quote` | Check whether an Arabic quotation occurs in the library and where: book, author, printed volume/page, edition, `matchedIn`, `exact`. | **`quote`**, `scope`, `bookId`, `limit` 1–10 | "Is this quotation really in the primary hadith collections?" |
-| `shamela_search_library` | Scoped search returning cited passages: book, author, death year, printed page, verbatim Arabic, `matchedIn`, edition data, shamela.ws link. | **`query`**, **`scope`**, `limit` 1–10 | "Where is «إنما الأعمال بالنيات» printed in the primary hadith collections?" |
+| `shamela_search_library` | Scoped search returning cited passages: book, author, death year, printed page, verbatim Arabic, `matchedIn`, edition data, Maktabah link. | **`query`**, **`scope`**, `limit` 1–10 | "Where is «إنما الأعمال بالنيات» printed in the primary hadith collections?" |
 | `search` | Whole-library search for ChatGPT deep research. Up to 10 `{id, title, url}`; `id` is `bookId:pageId`. Unscoped. | **`query`** | (deep research mode) "Research the classical sources on «التيمم»." |
 | `fetch` | Read one page by a `search` id. Main text and footnotes kept apart, with `metadata`. | **`id`** | Called by deep research after `search` |
 

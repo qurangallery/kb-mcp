@@ -1,6 +1,6 @@
 # How does search work in the Shamela MCP server, and how are citations given?
 
-> `shamela_search_library` searches one of twelve named scopes, tries the exact phrase before the words separately, and returns verbatim Arabic with book, edition, printed volume/page and a shamela.ws link.
+> `shamela_search_library` searches one of twelve named scopes, tries the exact phrase before the words separately, and returns verbatim Arabic with book, edition, printed volume/page and a Maktabah link.
 > Each passage says whether the words were in the author's main text or an editor's footnote, and whether the exact phrase was found.
 
 ## Queries must be Arabic
@@ -71,9 +71,9 @@ Result summary: `relaxedToTokens: false`, `booksSearched: 8`, `totalMatches: 3`.
 
 | `book` | `printedPage` | `matchedIn` | `matchQuality` | `sourceUrl` |
 | --- | --- | --- | --- | --- |
-| سنن أبي داود - ت الأرنؤوط | `3/ 526` | `footnote` | `exact_phrase` | `https://shamela.ws/book/117359/1796` |
-| سنن ابن ماجه - ت الأرنؤوط | `5/ 305` | `body` | `exact_phrase` | `https://shamela.ws/book/98138/2939` |
-| صحيح البخاري - ط السلطانية | `1/ 6` | `body` | `exact_phrase` | `https://shamela.ws/book/1681/10` |
+| سنن أبي داود - ت الأرنؤوط | `3/ 526` | `footnote` | `exact_phrase` | `https://qurangallery.com/maktabah/book/117359/1796` |
+| سنن ابن ماجه - ت الأرنؤوط | `5/ 305` | `body` | `exact_phrase` | `https://qurangallery.com/maktabah/book/98138/2939` |
+| صحيح البخاري - ط السلطانية | `1/ 6` | `body` | `exact_phrase` | `https://qurangallery.com/maktabah/book/1681/10` |
 
 One passage in full (excerpt shortened here):
 
@@ -88,7 +88,7 @@ One passage in full (excerpt shortened here):
   "arabic": "…عُمَرَ بْنَ الْخَطَّابِ ﵁ عَلَى الْمِنْبَرِ، قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ، يَقُولُ: «إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى…",
   "matchedIn": "body",
   "matchQuality": "exact_phrase",
-  "sourceUrl": "https://shamela.ws/book/1681/10",
+  "sourceUrl": "https://qurangallery.com/maktabah/book/1681/10",
   "edition": "ط السلطانية",
   "publisher": "السلطانية"
 }
@@ -117,7 +117,7 @@ Passage fields:
 | `matchQuality` | How the match was made, e.g. `exact_phrase` |
 | `bookId`, `pageId` | Shamela identifiers of the page |
 | `edition`, `editor`, `publisher` | Present only when the library records them; never guessed |
-| `sourceUrl` | `https://shamela.ws/book/{bookId}/{pageId}` |
+| `sourceUrl` | `https://qurangallery.com/maktabah/book/{bookId}/{pageId}` |
 
 To read the whole page, pass `bookId` and `pageId` to `shamela_read`.
 
@@ -205,7 +205,7 @@ The server publishes these as the resource `qurangallery://grounding-rules` (`te
 7. No grading and no rulings. The server never grades a hadith as ṣaḥīḥ, ḥasan or ḍaʿīf and gives no fatwa; a grading quoted by a source is reported as that source's statement.
 8. Credit the source: link `sourceUrl` and credit shamela.ws.
 
-A good citation: al-Bukhārī, Ṣaḥīḥ al-Bukhārī, ṭ. al-Sulṭāniyya, 1/6 (main text), with the shamela.ws link. A bad one: a book and hadith number the model remembered.
+A good citation: al-Bukhārī, Ṣaḥīḥ al-Bukhārī, ṭ. al-Sulṭāniyya, 1/6 (main text), with the Maktabah link. A bad one: a book and hadith number the model remembered.
 
 ## Limitations
 

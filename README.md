@@ -14,7 +14,7 @@ This repository is the documentation. Hosted service, source not published; docs
 - **No API key required.** Connect to the URL; an optional free key only raises the rate limits.
 - **Printed volume and page on every hit** (`printedPage`, for example `1/ 6`), flagged `citable: false` when the book uses Shamela's automatic numbering instead.
 - **Main text vs footnote.** `matchedIn` says whether the words matched the author's text (`body`), the editor's footnote (`footnote`), `both` or `unknown`.
-- **Verbatim Arabic**, up to 1,600 characters per passage, with a `sourceUrl` on shamela.ws.
+- **Verbatim Arabic**, up to 1,600 characters per passage, with a `sourceUrl` in the Maktabah reader.
 - **Edition, editor and publisher** where the library records them; never filled in.
 - **Scoped search.** `shamela_search_library` takes one of 12 scopes (`hadith-primary`, `tafsir-canonical`, `fiqh-hanafi`, …) and tries the exact phrase before separate words.
 - **Check a quotation.** `shamela_verify_quote` takes an Arabic quotation and says whether it occurs in the searched scope or book, on which printed page, and whether the words are the author's text or an editor's footnote. A quotation it cannot find is reported as not found in that scope, never as false.
@@ -29,7 +29,7 @@ This repository is the documentation. Hosted service, source not published; docs
 | 1. Endpoint | `https://qurangallery.com/mcp/shamela`: Streamable HTTP (POST), stateless, hosted; nothing to install |
 | 2. Access | No account and no key. An optional free key only raises limits: keyless 10 tool calls a minute and 200 a day per IP, with a key 60 a minute; page range 5 vs 20 pages, chapter read 10 vs 100 pages |
 | 3. Corpus | 8,594 works, 3,188 authors, 41 categories, from Maktabah al-Shamela; the server is run by Quran Gallery, not by shamela.ws |
-| 4. Every hit returns | Book, author and death year, printed volume and page (`printedPage`), verbatim Arabic, `matchedIn` (main text or footnote), edition, editor and publisher where recorded, `bookId` and `pageId`, and a shamela.ws link |
+| 4. Every hit returns | Book, author and death year, printed volume and page (`printedPage`), verbatim Arabic, `matchedIn` (main text or footnote), edition, editor and publisher where recorded, `bookId` and `pageId`, and a Maktabah link |
 | 5. Printed vs automatic pagination | 7,177 works follow a printed edition; 1,417 use Shamela's automatic numbering, flagged `citable: false` and `auto_numbered: true`, with the label «بترقيم الشاملة آليا» |
 | 6. Main text vs footnote | `matchedIn`: `body`, `footnote`, `both` or `unknown`; filter one layer with `search_in`, keep only printed pagination with `citable_only` |
 | 7. Tools | 15 (the same for every client), 3 prompts, 1 resource. Start with `shamela_search_library`; check a quotation with `shamela_verify_quote`; verify with `shamela_find` (`kind: "work"`), `shamela_cite` (`mode: "printed_page"`, then `"citation"`), `shamela_read`; `search` and `fetch` (one argument, unscoped) for ChatGPT deep research |
@@ -90,7 +90,7 @@ Then ask something the library can answer. The assistant translates your questio
 
 | Question | Tool | Notes |
 | --- | --- | --- |
-| What is the printed volume and page of this passage? | `shamela_search_library` | Every hit has `printedPage`, the edition, and a shamela.ws link. Check a citation back with `shamela_cite` (`mode: "printed_page"`) |
+| What is the printed volume and page of this passage? | `shamela_search_library` | Every hit has `printedPage`, the edition, and a Maktabah link. Check a citation back with `shamela_cite` (`mode: "printed_page"`) |
 | Are these words in the author's text or in the editor's footnote? | `shamela_search_library`, `shamela_verify_quote` | `matchedIn` names the layer; filter one layer with `search_in` |
 | Does this quotation occur in the library, and where? | `shamela_verify_quote` | Matches ignoring diacritics; at least 3 Arabic words. A miss means "not found in the scope searched" |
 | Where is this hadith, and in which collections? | `shamela_lookup_hadith`, `shamela_search_library` with `hadith-primary` | Isnad chains and narrators are returned without grading |
@@ -203,7 +203,7 @@ Corrections are welcome as issues or pull requests: see [CONTRIBUTING.md](./CONT
 
 ## بالعربية
 
-خادم MCP مستضاف من Quran Gallery فوق المكتبة الشاملة: 8,594 كتابًا من كتب التراث، يُرجع لكل مقطع الكتاب والمجلد والصفحة المطبوعة والطبعة والنص العربي حرفيًّا، ورابطه في shamela.ws. لا حساب ولا مفتاح ولا تثبيت.
+خادم MCP مستضاف من Quran Gallery فوق المكتبة الشاملة: 8,594 كتابًا من كتب التراث، يُرجع لكل مقطع الكتاب والمجلد والصفحة المطبوعة والطبعة والنص العربي حرفيًّا، ورابطه في قارئ المكتبة. لا حساب ولا مفتاح ولا تثبيت.
 
 - **العنوان:** `https://qurangallery.com/mcp/shamela` (Streamable HTTP).
 - **الإضافة إلى Claude Code:** `claude mcp add --transport http quran-gallery https://qurangallery.com/mcp/shamela`. وأمثلة بقية العملاء في مجلد [`examples/`](./examples/).
