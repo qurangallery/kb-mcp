@@ -103,7 +103,7 @@ The value is written without a space after the colon because some clients do not
 
 ## Check the connection
 
-Your client should list 14 tools, starting with `shamela_search_library`. To check without a client:
+Your client should list 15 tools, starting with `shamela_search_library`. To check without a client:
 
 ```bash
 curl -s https://qurangallery.com/mcp/shamela \
@@ -149,7 +149,7 @@ Never send a placeholder. Any bearer token is checked, so `Bearer qg_sk_your_key
 
 - Only Streamable HTTP. Clients limited to SSE need `mcp-remote` or a newer version.
 - ChatGPT cannot send a key, so it always uses the keyless limits.
-- Some clients cap the total number of tools they load across all servers; this server lists 14.
+- Some clients cap the total number of tools they load across all servers; this server lists 15.
 - Results are only as good as the question's Arabic search terms. See [Search and citations](./search-and-citations.md).
 
 ## Related

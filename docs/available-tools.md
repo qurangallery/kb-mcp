@@ -1,9 +1,9 @@
 # What tools does the Shamela library MCP server expose?
 
-> 14 read-only tools (the same for every client), 3 prompts and 1 resource, as returned by `tools/list` on 2026-10-15 (server version 0.3.0).
+> 15 read-only tools (the same for every client), 3 prompts and 1 resource, as returned by `tools/list` on 2026-11-01 (server version 0.3.0).
 > Start with `shamela_search_library`, which needs an Arabic query and one of 12 scopes; reach for the `shamela_*` tools when you need something it cannot do.
 
-Three tools are Quran Gallery's own (`shamela_search_library`, `search`, `fetch`). The other 11 come from the library server (version 1.4.0), which consolidated its 39 earlier tools into routers; the old names still work as unlisted aliases, see [Renamed and consolidated in 1.4.0](#renamed-and-consolidated-in-140). Your client receives the full parameter documentation for each tool in its schema; this page is a map with a sample request for each.
+Four tools are Quran Gallery's own (`shamela_search_library`, `shamela_verify_quote`, `search`, `fetch`). The other 11 come from the library server (version 1.4.0), which consolidated its 39 earlier tools into routers; the old names still work as unlisted aliases, see [Renamed and consolidated in 1.4.0](#renamed-and-consolidated-in-140). Your client receives the full parameter documentation for each tool in its schema; this page is a map with a sample request for each.
 
 Required parameters are in **bold**. `response_format` is accepted by most `shamela_*` tools and is omitted below. The "Try asking" column is a plain-language request that should lead an assistant to call the tool.
 
@@ -54,10 +54,42 @@ The raw `shamela_*` tools answer invalid arguments the same way: a tool result w
 
 `matchedIn` says where the words were found: `body` (the main text, matn / المتن), `footnote` (the editor's or commentator's note, the tahqiq layer / التحقيق), `both`, or `unknown`. A footnote hit is not the author's sentence. Field by field: [Source attribution](../references/source-attribution.md).
 
+## shamela_verify_quote: check a quotation
+
+Checks whether an Arabic quotation occurs in the library and where: book, author, printed volume and page, edition, and whether the words are in the main text or in an editor's footnote. Use it on a passage an assistant quoted from memory.
+
+| Parameter | Type | Rules |
+| --- | --- | --- |
+| **`quote`** | string | The Arabic wording to look for, at least 3 words, as quoted. Diacritics are optional. |
+| `scope` | string | One of the 12 scope names above. Optional; ignored when `bookId` is given. |
+| `bookId` | integer | Search this one book (Shamela's book id, as in a result's `bookId`). Optional; wins over `scope`. |
+| `limit` | integer | Maximum matching pages, 1 to 10, default 5 |
+
+With neither `scope` nor `bookId`, the whole library is searched. A quote of fewer than 3 Arabic words, or one with no Arabic, returns a tool error that names the fix.
+
+It returns `verdict` (`found` or `not_found`), `matches`, `searched` (the scope or book searched, and the `normalisation` applied) and a `note`. Each match carries `docId`, `bookId`, `pageId`, `book`, `author`, `volume`, `printedPage`, `edition`, `matchedIn` (`body` or `foot`), `exact`, `differences`, `snippet` and `sourceUrl`.
+
+- Matching ignores diacritics, tatweel, punctuation and alef forms. `exact` says whether the page spells the words as given; `differences` says how they differ.
+- `not_found` means not found in the searched scope, not that the quotation is false or appears nowhere.
+- `matchedIn: "foot"` is the editor's or commentator's words, not the author's.
+- It reports where words are printed. It is not a ruling and does not say whether a passage is authentic.
+
+Example call (live, 2026-11-01):
+
+```json
+{
+  "name": "shamela_verify_quote",
+  "arguments": { "quote": "إنما الأعمال بالنيات", "scope": "hadith-primary", "limit": 1 }
+}
+```
+
+It returned `verdict: "found"` with one match: Sunan Abi Dawud (Arnaut edition), volume 3, page 526, `matchedIn: "foot"`, `exact: true`. The words there are a commentator's quotation in a footnote, not the hadith text itself.
+
 ## Curated tools
 
 | Tool | What it does | Key parameters | Try asking |
 | --- | --- | --- | --- |
+| `shamela_verify_quote` | Check whether an Arabic quotation occurs in the library and where: book, author, printed volume/page, edition, `matchedIn`, `exact`. | **`quote`**, `scope`, `bookId`, `limit` 1–10 | "Is this quotation really in the primary hadith collections?" |
 | `shamela_search_library` | Scoped search returning cited passages: book, author, death year, printed page, verbatim Arabic, `matchedIn`, edition data, shamela.ws link. | **`query`**, **`scope`**, `limit` 1–10 | "Where is «إنما الأعمال بالنيات» printed in the primary hadith collections?" |
 | `search` | Whole-library search for ChatGPT deep research. Up to 10 `{id, title, url}`; `id` is `bookId:pageId`. Unscoped. | **`query`** | (deep research mode) "Research the classical sources on «التيمم»." |
 | `fetch` | Read one page by a `search` id. Main text and footnotes kept apart, with `metadata`. | **`id`** | Called by deep research after `search` |
@@ -150,7 +182,7 @@ Some assistants describe tools this server does not have, such as `search_classi
 
 ## Renamed and consolidated in 1.4.0
 
-Library 1.4.0 consolidated the 39 tools of 1.3.0 into 11 (14 with `shamela_search_library`, `search` and `fetch`). Each router picks its behaviour with one argument: `match` on `shamela_search`, `kind` on `shamela_find` and `shamela_get_details`, `unit` on `shamela_read`, and `mode` on `shamela_cite` and the `shamela_lookup_*` tools. Every other argument keeps the name and meaning it had.
+Library 1.4.0 consolidated the 39 tools of 1.3.0 into 11 (15 with `shamela_search_library`, `search`, `fetch` and `shamela_verify_quote`). Each router picks its behaviour with one argument: `match` on `shamela_search`, `kind` on `shamela_find` and `shamela_get_details`, `unit` on `shamela_read`, and `mode` on `shamela_cite` and the `shamela_lookup_*` tools. Every other argument keeps the name and meaning it had.
 
 The old names still work as hidden aliases and are no longer listed by `tools/list`. A result from an alias carries `_meta.deprecated_alias`, and an alias is removed only after 14 days without calls. Docs and new code should use the new names.
 
@@ -217,7 +249,7 @@ curl -s https://qurangallery.com/mcp/shamela \
 - All tools are read-only.
 - Unscoped raw search ranks by term frequency, not scholarly authority. Pass a scope, or use `shamela_search_library`.
 - Search is lexical over Arabic words. There is no semantic or English search.
-- Some clients cap the total number of tools they load; this server lists 14.
+- Some clients cap the total number of tools they load; this server lists 15.
 
 ## Related
 

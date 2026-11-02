@@ -13,8 +13,8 @@
 | State | None. No `Mcp-Session-Id` is issued; each request stands alone |
 | Replies | One JSON object, `Content-Type: application/json` |
 | Protocol versions | `2025-11-25`, `2025-06-18` |
-| Server info | `name: qurangallery-shamela`, `version: 0.3.0` (live on 2026-10-15) |
-| Capabilities | 14 tools (the same for every client), 3 prompts, 1 resource |
+| Server info | `name: qurangallery-shamela`, `version: 0.3.0` (live on 2026-11-01) |
+| Capabilities | 15 tools (the same for every client), 3 prompts, 1 resource |
 | Authentication | None. Optional `Authorization: Bearer qg_sk_…` raises limits |
 | CORS | `Access-Control-Allow-Origin: *` |
 
@@ -40,7 +40,7 @@ await client.connect(
 );
 
 const { tools } = await client.listTools();
-console.log(tools.length, tools[0].name); // 14 shamela_search_library
+console.log(tools.length, tools[0].name); // 15 shamela_search_library
 
 const result = await client.callTool({
   name: 'shamela_search_library',
@@ -131,7 +131,7 @@ print(len(tools), hit['book'], hit['printedPage'], hit['matchedIn'])
 - The tool list was requested after connecting; most clients have a refresh action.
 - The `Authorization` header is a real key or absent.
 - The library behind the server may be briefly unreachable. `tools/list` then returns an empty list with HTTP 200 rather than tools that would fail. Wait a minute and reconnect.
-- Some clients cap the number of tools loaded across all servers. This server lists 14; turn off servers you do not need.
+- Some clients cap the number of tools loaded across all servers. This server lists 15; turn off servers you do not need.
 
 ## Limitations
 

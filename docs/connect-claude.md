@@ -12,7 +12,7 @@ The steps are the same in the browser and in the desktop app.
 | 1    | Open **Settings → Connectors** (some versions: **Customize → Connectors**). Click **+ Add**, then **Add custom connector**.                                                |
 | 2    | Name: `Quran Gallery`. URL: `https://qurangallery.com/mcp/shamela`. Click **Continue**.                                                                                    |
 | 3    | Claude detects the server and selects **No sign-in** (marked _Detected_). Keep it. Leave **Request headers** empty unless you have a key. Click **Add**, then **Connect**. |
-| 4    | The connector page lists 14 read-only tools, set to **Needs approval**. Keep that, or set read-only tools to **Always allow**.                                             |
+| 4    | The connector page lists 15 read-only tools, set to **Needs approval**. Keep that, or set read-only tools to **Always allow**.                                             |
 | 5    | In a chat, click **+** → **Connectors** and switch **Quran Gallery** on.                                                                                                   |
 | 6    | On the first tool call, click **Allow once** or **Always allow**.                                                                                                          |
 

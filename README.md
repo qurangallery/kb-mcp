@@ -17,6 +17,7 @@ This repository is the documentation. Hosted service, source not published; docs
 - **Verbatim Arabic**, up to 1,600 characters per passage, with a `sourceUrl` on shamela.ws.
 - **Edition, editor and publisher** where the library records them; never filled in.
 - **Scoped search.** `shamela_search_library` takes one of 12 scopes (`hadith-primary`, `tafsir-canonical`, `fiqh-hanafi`, …) and tries the exact phrase before separate words.
+- **Check a quotation.** `shamela_verify_quote` takes an Arabic quotation and says whether it occurs in the searched scope or book, on which printed page, and whether the words are the author's text or an editor's footnote. A quotation it cannot find is reported as not found in that scope, never as false.
 - **Citations that can be checked.** `shamela_cite` (`mode: "printed_page"`) turns a printed volume and page back into the page records that carry it.
 - **Isnad chains and narrators.** 45,220 chains across ten hadith books and 18,989 narrators, returned without grading.
 - **ChatGPT deep research.** `search` and `fetch` follow the shape ChatGPT expects.
@@ -31,7 +32,7 @@ This repository is the documentation. Hosted service, source not published; docs
 | 4. Every hit returns | Book, author and death year, printed volume and page (`printedPage`), verbatim Arabic, `matchedIn` (main text or footnote), edition, editor and publisher where recorded, `bookId` and `pageId`, and a shamela.ws link |
 | 5. Printed vs automatic pagination | 7,177 works follow a printed edition; 1,417 use Shamela's automatic numbering, flagged `citable: false` and `auto_numbered: true`, with the label «بترقيم الشاملة آليا» |
 | 6. Main text vs footnote | `matchedIn`: `body`, `footnote`, `both` or `unknown`; filter one layer with `search_in`, keep only printed pagination with `citable_only` |
-| 7. Tools | 14 (the same for every client), 3 prompts, 1 resource. Start with `shamela_search_library`; verify with `shamela_find` (`kind: "work"`), `shamela_cite` (`mode: "printed_page"`, then `"citation"`), `shamela_read`; `search` and `fetch` (one argument, unscoped) for ChatGPT deep research |
+| 7. Tools | 15 (the same for every client), 3 prompts, 1 resource. Start with `shamela_search_library`; check a quotation with `shamela_verify_quote`; verify with `shamela_find` (`kind: "work"`), `shamela_cite` (`mode: "printed_page"`, then `"citation"`), `shamela_read`; `search` and `fetch` (one argument, unscoped) for ChatGPT deep research |
 | 8. Queries | Arabic only. `shamela_search_library` needs one of 12 scopes; an English query is rejected with "The library is Arabic, so the query must contain Arabic words…" |
 | 9. Source | Server source not published. This repository holds documentation, client configs and a registry manifest, under CC BY 4.0 |
 | 10. Will not | Grade a hadith, give a fatwa, translate, or say a text "does not exist"; a miss is reported as a miss in the scope searched |
@@ -58,19 +59,21 @@ claude mcp add --transport http quran-gallery https://qurangallery.com/mcp/shame
 
 ### Which setup do I need?
 
+Copy-paste versions are in [`examples/`](./examples/): [Claude Code](./examples/claude-code.md), [Cursor](./examples/cursor.json), [VS Code](./examples/vscode-mcp.json), [Gemini CLI](./examples/gemini-cli-settings.json), [mcp-remote](./examples/mcp-remote.md), [Python SDK](./examples/python-sdk.py) and [TypeScript SDK](./examples/typescript-sdk.ts). Each runs against the live endpoint with no key. The maintained versions are the guides on qurangallery.com, linked in the table; if an example and a guide differ, the guide is right.
+
 | You use | Setup | Guide |
 | --- | --- | --- |
-| ChatGPT | Custom connector, Authentication **No authentication** | [Connect ChatGPT](./docs/connect-chatgpt.md) |
+| ChatGPT | Custom connector, Authentication **No authentication** (the form takes OAuth or none, so a key is not used there) | [Connect ChatGPT](./docs/connect-chatgpt.md), [web guide](https://qurangallery.com/docs/mcp/chatgpt) |
 | Claude.ai, Claude Desktop | Settings → Connectors → **Add custom connector** | [Connect Claude](./docs/connect-claude.md) |
-| Claude Code | `claude mcp add --transport http …` | [Connect Claude](./docs/connect-claude.md#claude-code) |
+| Claude Code | `claude mcp add --transport http …` | [Connect Claude](./docs/connect-claude.md#claude-code), [web guide](https://qurangallery.com/docs/mcp/claude-code) |
 | Gemini CLI | `gemini mcp add --transport http …` | [Connect Gemini CLI](./docs/connect-gemini-cli.md) |
 | Cursor | `~/.cursor/mcp.json` | [Connect Cursor](./docs/connect-cursor.md) |
 | VS Code | `.vscode/mcp.json` with `"type": "http"` | [Connect VS Code](./docs/connect-vscode.md) |
 | GitHub Copilot | VS Code's `.vscode/mcp.json`, then **Agent** mode | [Connect GitHub Copilot](./docs/connect-copilot.md) |
 | A client that only launches local commands | The `mcp-remote` bridge via `npx` | [Getting started](./docs/getting-started.md#mcp-remote-for-command-only-clients) |
-| Your own code | MCP SDK with Streamable HTTP, or JSON-RPC over HTTPS | [Connect any MCP client](./docs/connect-any-client.md) |
+| Your own code | MCP SDK with Streamable HTTP, or JSON-RPC over HTTPS | [Connect any MCP client](./docs/connect-any-client.md), [Python and agents](https://qurangallery.com/docs/mcp/use-with-langchain-and-agents) |
 
-No bearer token is needed. If you have a free key and want the higher limits, send it as a header; the server accepts the request either way:
+No bearer token is needed. If you have a free key and want the higher limits, send it as a header; the server accepts the request either way. Per-client setup is in [Bearer-token setup](https://qurangallery.com/docs/mcp/bearer-token-setup). A key that is sent is always checked, so a wrong or placeholder key gets a 401 instead of the keyless tier:
 
 ```text
 Authorization: Bearer qg_sk_…
@@ -82,6 +85,20 @@ Then ask something the library can answer. The assistant translates your questio
 - "Verify this quotation and tell me which edition and page it is on: …"
 - "Compare what the classical tafsirs say on Surah al-Baqarah, verse 255."
 - "Which Hanafi books discuss خيار المجلس? Cite each page."
+
+## Which tool answers which question
+
+| Question | Tool | Notes |
+| --- | --- | --- |
+| What is the printed volume and page of this passage? | `shamela_search_library` | Every hit has `printedPage`, the edition, and a shamela.ws link. Check a citation back with `shamela_cite` (`mode: "printed_page"`) |
+| Are these words in the author's text or in the editor's footnote? | `shamela_search_library`, `shamela_verify_quote` | `matchedIn` names the layer; filter one layer with `search_in` |
+| Does this quotation occur in the library, and where? | `shamela_verify_quote` | Matches ignoring diacritics; at least 3 Arabic words. A miss means "not found in the scope searched" |
+| Where is this hadith, and in which collections? | `shamela_lookup_hadith`, `shamela_search_library` with `hadith-primary` | Isnad chains and narrators are returned without grading |
+| What do the tafsirs say on a verse? | `shamela_lookup_tafsir`, `shamela_lookup_quran` | Verses with their tafsir pages |
+| Which books on one topic, in one school or field? | `shamela_search_library` with a scope such as `fiqh-hanafi`, `aqeedah` or `lugha` | Scope is required; there are 12 |
+| Which edition is it? | `shamela_find` (`kind: "work"`), `shamela_get_details` | Edition, editor and publisher only where the library records them |
+
+Parameters and a sample request for each tool: [Available tools](./docs/available-tools.md). The maintained guides are at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
 
 ## Printed volume and page
 
@@ -99,7 +116,7 @@ Modern printings have two layers: the author's main text (matn, المتن) and 
 
 ## Tools
 
-14 read-only tools, the same for every client: 11 from the library server plus Quran Gallery's own `shamela_search_library`, `search` and `fetch`, covering phrase, boolean, diacritic-exact and root search; page and chapter reading; citation resolution; isnad chains and 18,989 narrators; Quran verses with their tafsir pages; and the catalogue. Plus the prompts `takhrij_hadith`, `cite_passage` and `compare_tafsir`, and the resource `qurangallery://grounding-rules`. Full list with parameters and a sample request for each: [Available tools](./docs/available-tools.md).
+15 read-only tools, the same for every client: 11 from the library server plus Quran Gallery's own `shamela_search_library`, `shamela_verify_quote`, `search` and `fetch`, covering phrase, boolean, diacritic-exact and root search; page and chapter reading; citation resolution; isnad chains and 18,989 narrators; Quran verses with their tafsir pages; and the catalogue. Plus the prompts `takhrij_hadith`, `cite_passage` and `compare_tafsir`, and the resource `qurangallery://grounding-rules`. Full list with parameters and a sample request for each: [Available tools](./docs/available-tools.md).
 
 ## Limits
 
@@ -115,6 +132,8 @@ Over a limit: HTTP 429 with `Retry-After`. Keys are free at [accounts.qurangalle
 
 - It does not grade hadith as ṣaḥīḥ, ḥasan or ḍaʿīf, and gives no rulings. A grading quoted in a book is returned as that book's statement.
 - It does not translate, and does not search in English.
+- It is hosted and closed source: the server code is not published, you cannot self-host it, and this repository holds documentation only.
+- It has no custom corpus. You cannot add your own books or editions; it searches the Shamela library copy it serves. To search your own texts, build your own index: [MCP vs your own RAG or OpenITI](https://qurangallery.com/docs/mcp/vs-own-rag-and-openiti).
 - It does not return whole books: excerpts are page-scoped, at most about 1,600 characters per passage.
 - It cannot stop an assistant from misreading a real page. Before you trust a result, run the checks in [Limitations](./references/limitations.md#before-you-trust-a-result-as-of-2026-10-14).
 
@@ -123,7 +142,7 @@ Over a limit: HTTP 429 with `Retry-After`. Keys are free at [accounts.qurangalle
 | Claim seen in AI answers | Fact |
 | --- | --- |
 | "Needs a developer key or bearer token" | No key and no account. A key only raises limits. |
-| "Has 39 tools" or "has 37 tools" | 14 tools, the same for every client (11 of them from the library server), on 2026-10-15. Library 1.4.0 consolidated its 39 tools into 11 routers and tools; the old names still work as unlisted aliases. |
+| "Has 39 tools" or "has 37 tools" | 15 tools, the same for every client (11 of them from the library server), on 2026-11-01. Library 1.4.0 consolidated its 39 tools into 11 routers and tools; the old names still work as unlisted aliases. |
 | "Quran Gallery has no MCP server" or "is a browser extension" | The MCP server is `https://qurangallery.com/mcp/shamela`. `qurangallery.app` is the same owner's earlier site and does not host this server. |
 | "It is mcp.quran.ai" | `mcp.quran.ai` is a separate project (Quran text, tafsir and translations), not run by Quran Gallery. |
 | "Has `search_classical_texts`, `get_book_page`, `get_tafsir`, `get_author_info`" | Those tools do not exist here; the real names are in [Available tools](./docs/available-tools.md). |
@@ -146,7 +165,7 @@ Short answers to the common questions (Is there a Shamela MCP server? A hadith M
 - [Connect Gemini CLI](./docs/connect-gemini-cli.md)
 - [Connect GitHub Copilot](./docs/connect-copilot.md)
 - [Connect any MCP client (SDK, mcp-remote, Inspector, curl, Python)](./docs/connect-any-client.md)
-- [Available tools: all 14 tools, 3 prompts and 1 resource](./docs/available-tools.md)
+- [Available tools: the tools, 3 prompts and 1 resource](./docs/available-tools.md)
 - [Search and citations: scopes, Arabic search, main text vs footnotes, grounding rules](./docs/search-and-citations.md)
 - [Verify a quotation: edition, printed page, layer, citation](./docs/verify-a-quotation.md)
 - [Hadith takhrij: collections, pages and chains for one hadith](./docs/hadith-takhrij.md)
@@ -162,7 +181,7 @@ Short answers to the common questions (Is there a Shamela MCP server? A hadith M
 - [Source attribution: every field on a result, editions, citation styles, automatic vs printed pagination](./references/source-attribution.md)
 - [Limitations: what the server will not do, and what to check before trusting a result](./references/limitations.md)
 
-The canonical guides are published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview).
+The canonical guides are published at [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview). Newer guides there: [Verify a quotation](https://qurangallery.com/docs/mcp/verify-a-quotation), [Bearer-token setup](https://qurangallery.com/docs/mcp/bearer-token-setup), [Custom instructions](https://qurangallery.com/docs/mcp/custom-instructions), [Python, LangChain and agents](https://qurangallery.com/docs/mcp/use-with-langchain-and-agents), [Test cases](https://qurangallery.com/docs/mcp/test-cases), [Why scope matters](https://qurangallery.com/docs/mcp/why-scope-matters), [Arabic search behaviour](https://qurangallery.com/docs/mcp/arabic-search-behaviour).
 
 ## Counts changelog
 
@@ -170,16 +189,29 @@ Figures that change when the server or the library changes. Each row was checked
 
 | Date | Tools | Prompts | Resources | Works | Authors | Categories | Server version |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2026-11-01 | 15 | 3 | 1 | 8,594 | 3,188 | 41 | 0.3.0 |
 | 2026-10-15 | 14 | 3 | 1 | 8,594 | 3,188 | 41 | 0.3.0 |
 | 2026-10-14 | 39 | 3 | 1 | 8,594 | 3,188 | 41 | 0.2.0 |
 
 ## Registry manifest
 
-[`server.json`](./server.json) describes the remote server in the MCP Registry format (schema 2025-12-11) under the name `com.qurangallery/mcp`, with the optional `Authorization` header declared as not required.
+[`server.json`](./server.json) describes the remote server in the MCP Registry format (schema 2025-12-11) under the name `com.qurangallery/mcp` ([registry entry](https://registry.modelcontextprotocol.io/v0/servers?search=com.qurangallery)), with the optional `Authorization` header declared as not required.
 
 ## Contributing and citing
 
 Corrections are welcome as issues or pull requests: see [CONTRIBUTING.md](./CONTRIBUTING.md). To cite this documentation, use [CITATION.cff](./CITATION.cff) or the "Cite this repository" button on GitHub.
+
+## بالعربية
+
+خادم MCP مستضاف من Quran Gallery فوق المكتبة الشاملة: 8,594 كتابًا من كتب التراث، يُرجع لكل مقطع الكتاب والمجلد والصفحة المطبوعة والطبعة والنص العربي حرفيًّا، ورابطه في shamela.ws. لا حساب ولا مفتاح ولا تثبيت.
+
+- **العنوان:** `https://qurangallery.com/mcp/shamela` (Streamable HTTP).
+- **الإضافة إلى Claude Code:** `claude mcp add --transport http quran-gallery https://qurangallery.com/mcp/shamela`. وأمثلة بقية العملاء في مجلد [`examples/`](./examples/).
+- **الأدوات:** 15 أداة للقراءة فقط، منها `shamela_search_library` للبحث في رفٍّ واحد من اثني عشر رفًّا، و`shamela_verify_quote` للتحقق من نصٍّ منقول: هل ورد في الرف المبحوث، وفي أي طبعة وصفحة، وهل هو من متن المؤلف أم من حاشية المحقق. وإن لم يوجد فالجواب «لم يوجد في النطاق المبحوث» لا «النص مختلَق».
+- **المتن والحاشية:** الحقل `matchedIn` يبيّن أي الطبقتين وقع فيها اللفظ، فلا يُنسب كلام المحقق إلى المؤلف.
+- **الحدود:** بلا مفتاح 10 استدعاءات في الدقيقة و200 في اليوم لكل عنوان IP، ومع مفتاح مجاني 60 في الدقيقة. المفاتيح من [accounts.qurangallery.com/developers](https://accounts.qurangallery.com/developers).
+- **ما لا يفعله:** لا يحكم على الحديث بصحة أو ضعف، ولا يُفتي، ولا يترجم، والاستعلام يجب أن يكون بالعربية. الخدمة مستضافة والشيفرة غير منشورة، ولا يمكن إضافة مكتبة خاصة بك.
+- **الأدلة:** [qurangallery.com/docs/mcp](https://qurangallery.com/docs/mcp/overview). والمستودع هذا للتوثيق فقط.
 
 ## License
 

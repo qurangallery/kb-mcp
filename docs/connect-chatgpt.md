@@ -34,7 +34,7 @@ Open **Settings → Plugins** (`chatgpt.com/settings/plugins-settings`) and clic
 
 ## Deep research: `search` and `fetch`
 
-ChatGPT deep research and company knowledge need two read-only tools named `search` and `fetch`. This server provides both. Every client, ChatGPT included, sees the same 14 tools, `search` and `fetch` among them.
+ChatGPT deep research and company knowledge need two read-only tools named `search` and `fetch`. This server provides both. Every client, ChatGPT included, sees the same 15 tools, `search` and `fetch` among them.
 
 ```text
 search { "query": "إنما الأعمال بالنيات" }

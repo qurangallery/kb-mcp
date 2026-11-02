@@ -1,7 +1,7 @@
 # Quran Gallery MCP server FAQ: Shamela, hadith, tafsir and fiqh over MCP
 
 > Quran Gallery runs a free, hosted MCP server for the Maktabah al-Shamela library at `https://qurangallery.com/mcp/shamela`.
-> No account, no key, no install: 14 read-only tools over 8,594 classical Islamic works, each hit cited by edition, volume and printed page.
+> No account, no key, no install: 15 read-only tools over 8,594 classical Islamic works, each hit cited by edition, volume and printed page.
 
 ## Is there an MCP server for Maktabah al-Shamela?
 
@@ -29,7 +29,7 @@ Yes.
 
 ## How many tools does it have?
 
-14, the same for every client, all read-only: 11 `shamela_*` library tools plus Quran Gallery's own `shamela_search_library`, `search` and `fetch` (a quick generic entry; for hadith, tafsir or fiqh prefer `shamela_search_library`). Also 3 prompts (`takhrij_hadith`, `cite_passage`, `compare_tafsir`) and 1 resource (`qurangallery://grounding-rules`). See [Available tools](./available-tools.md).
+15, the same for every client, all read-only: 11 `shamela_*` library tools plus four of Quran Gallery's own: `shamela_search_library`, `shamela_verify_quote` (checks whether a quotation occurs and where), `search` and `fetch` (a quick generic entry; for hadith, tafsir or fiqh prefer `shamela_search_library`). Also 3 prompts (`takhrij_hadith`, `cite_passage`, `compare_tafsir`) and 1 resource (`qurangallery://grounding-rules`). See [Available tools](./available-tools.md).
 
 ## What is in the library?
 
@@ -45,7 +45,7 @@ Book, author and death year (AH), verbatim Arabic, the printed volume and page (
 
 ## Can it check a quotation an AI gave me?
 
-Yes, in four calls: resolve the edition, resolve the printed page, read the page, format the citation. See [Verify a quotation](./verify-a-quotation.md).
+Yes. `shamela_verify_quote` checks in one call whether an Arabic quotation occurs in the library and where (book, printed volume and page, edition, main text or footnote). To check a specific citation, use four calls: resolve the edition, resolve the printed page, read the page, format the citation. See [Verify a quotation](./verify-a-quotation.md).
 
 ## Can I search in English?
 

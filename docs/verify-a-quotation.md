@@ -3,7 +3,7 @@
 > Resolve the edition with `shamela_find` (`kind: "work"`), turn the printed volume/page into page ids with `shamela_cite` (`mode: "printed_page"`), read each page with `shamela_read`, then format the reference with `shamela_cite` (`mode: "citation"`).
 > Each step's result decides the next; a page number is only comparable against the printing it came from.
 
-There is no single "verify" tool. The worked example below checks the claim: *Sahih al-Bukhari, Sultaniyya edition, vol. 1, p. 6, has «إنما الأعمال بالنيات».*
+To check only whether the wording occurs in the library, and where, call `shamela_verify_quote` with the quote. To check a volume and page in a named edition, follow the steps below. The worked example checks the claim: *Sahih al-Bukhari, Sultaniyya edition, vol. 1, p. 6, has «إنما الأعمال بالنيات».*
 
 ## Before you start: which edition?
 

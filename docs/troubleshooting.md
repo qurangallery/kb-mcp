@@ -28,7 +28,7 @@ A body starting `{"jsonrpc":"2.0","id":1,"result":{"tools":[{"name":"shamela_sea
 | A `GET` in a browser shows a short JSON description instead of tools | Expected. A `GET` asking for JSON returns the server's name, transport and docs link; tools are only served over `POST`. | Nothing to fix. |
 | The client connects but lists zero tools | The library service behind the server is unreachable, so `tools/list` returns an empty list rather than tools that would fail. | Wait a minute, then reconnect or refresh the tool list. |
 | Tools are missing or out of date after a change | Most clients read the tool list once, when the server connects. | Reconnect the server or restart the client. Per client: Claude Code `/mcp` then reconnect; Gemini CLI restart and `/mcp list`; Cursor toggle the server off and on; VS Code and Copilot **MCP: List Servers** then restart; Claude.ai **Refresh tools list**; ChatGPT **Refresh tools**, then a new conversation. |
-| The client refuses to load all tools | Some clients cap the number of tools loaded across all servers. This server lists 14. | Turn off servers you do not need in that client. |
+| The client refuses to load all tools | Some clients cap the number of tools loaded across all servers. This server lists 15. | Turn off servers you do not need in that client. |
 | GitHub Copilot never shows the tools | Organisation policy can disable MCP servers for Copilot. | Ask the administrator whether MCP servers are allowed. |
 
 ## Authentication errors
